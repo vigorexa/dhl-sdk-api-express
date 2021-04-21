@@ -42,6 +42,11 @@ class ShipmentInfo
     private $ServiceType;
 
     /**
+     * @var ServiceType
+     */
+    private $LocalServiceType;
+
+    /**
      * The customer account to be used as payer in the request. If the <Account> tag is used then there is no
      * need to populate the Billing section further down below in this table as the <Account> tag will override
      * any other accounts entered.
@@ -216,6 +221,15 @@ class ShipmentInfo
     {
         return $this->ServiceType;
     }
+    /**
+     * Returns the local service type.
+     *
+     * @return ServiceType
+     */
+    public function getLocalServiceType()
+    {
+        return $this->LocalServiceType;
+    }
 
     /**
      * Sets the service type.
@@ -227,6 +241,19 @@ class ShipmentInfo
     public function setServiceType($serviceType)
     {
         $this->ServiceType = new ServiceType($serviceType);
+        return $this;
+    }
+
+    /**
+     * Sets the local service type.
+     *
+     * @param string $serviceType The service type
+     *
+     * @return self
+     */
+    public function setLocalServiceType($serviceType)
+    {
+        $this->LocalServiceType = new ServiceType($serviceType);
         return $this;
     }
 
