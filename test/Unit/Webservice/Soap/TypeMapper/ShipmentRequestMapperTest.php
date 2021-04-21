@@ -6,18 +6,17 @@
 namespace Dhl\Express\Webservice\Soap\TypeMapper;
 
 use Dhl\Express\Model\Request\Insurance;
-use Dhl\Express\Model\Request\Shipment\DangerousGoods\DryIce;
 use Dhl\Express\Model\Request\Package;
 use Dhl\Express\Model\Request\Recipient;
+use Dhl\Express\Model\Request\Shipment\DangerousGoods\DryIce;
 use Dhl\Express\Model\Request\Shipment\ShipmentDetails;
 use Dhl\Express\Model\Request\Shipment\Shipper;
 use Dhl\Express\Model\ShipmentRequest;
 use Dhl\Express\Webservice\Soap\Type\Common\DropOffType;
+use Dhl\Express\Webservice\Soap\Type\Common\SpecialServices;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\Packages\RequestedPackages;
-use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\ShipmentInfo\ServiceType;
 use Dhl\Express\Webservice\Soap\Type\SoapShipmentRequest;
 use PHPUnit\Framework\TestCase;
-use Dhl\Express\Webservice\Soap\Type\Common\SpecialServices\Service;
 
 /**
  * @author   Ronny Gertler <ronny.gertler@netresearch.de>
@@ -171,17 +170,17 @@ class ShipmentRequestMapperTest extends TestCase
         );
 
         /**
-         * @var Service[] $soapSpecialServices
+         * @var SpecialServices\Service[] $soapSpecialServices
          */
         $soapSpecialServices = $soapRequest->getRequestedShipment()
             ->getShipmentInfo()->getSpecialServices()->getService();
 
         /**
-         * @var Service $soapService
+         * @var SpecialServices\Service $soapService
          */
         foreach ($soapSpecialServices as $soapService) {
-            if ($soapService->getServiceType() === ServiceType::TYPE_INSURANCE) {
-                self::assertInstanceOf(Service::class, $soapService);
+            if ($soapService->getServiceType() === SpecialServices\ServiceType::TYPE_INSURANCE) {
+                self::assertInstanceOf(SpecialServices\Service::class, $soapService);
                 self::assertSame($insurance->getCurrencyCode(), $soapService->getCurrencyCode());
                 self::assertSame($insurance->getValue(), $soapService->getServiceValue()->getValue());
             }

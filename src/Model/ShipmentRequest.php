@@ -15,6 +15,7 @@ use Dhl\Express\Api\Data\Request\Shipment\ShipperInterface;
 use Dhl\Express\Api\Data\ShipmentRequestInterface;
 use Dhl\Express\Model\Request\Recipient;
 use Dhl\Express\Model\Request\Shipment\Shipper;
+use Dhl\Express\Webservice\Soap\Type\Common\SpecialServices;
 
 /**
  * Shipment Request.
@@ -68,6 +69,11 @@ class ShipmentRequest implements ShipmentRequestInterface
      * @var null|LabelOptionsInterface
      */
     private $labelOptions;
+
+    /**
+     * @var SpecialServices[}
+     */
+    private $specialServices = [];
 
     /**
      * SoapShipmentRequest constructor.
@@ -189,6 +195,24 @@ class ShipmentRequest implements ShipmentRequestInterface
     public function setLabelOptions(LabelOptionsInterface $labelOptions): ShipmentRequestInterface
     {
         $this->labelOptions = $labelOptions;
+
+        return $this;
+    }
+
+    /**
+     * @return SpecialServices\Service[]
+     */
+    public function getSpecialServices(): array
+    {
+        return $this->specialServices;
+    }
+
+    /**
+     * @return SpecialServices\Service[]
+     */
+    public function setSpecialServices(array $services): ShipmentRequestInterface
+    {
+        $this->specialServices = $services;
 
         return $this;
     }

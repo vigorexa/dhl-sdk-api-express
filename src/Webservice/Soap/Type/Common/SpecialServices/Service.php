@@ -4,6 +4,7 @@
  */
 namespace Dhl\Express\Webservice\Soap\Type\Common\SpecialServices;
 
+use Dhl\Express\Api\Data\Request\ServiceInterface;
 use Dhl\Express\Webservice\Soap\Type\Common\CurrencyCode;
 use Dhl\Express\Webservice\Soap\Type\Common\Date;
 use Dhl\Express\Webservice\Soap\Type\Common\Money;
@@ -15,7 +16,7 @@ use Dhl\Express\Webservice\Soap\Type\Common\Money;
  * @author   Rico Sonntag <rico.sonntag@netresearch.de>
  * @link     https://www.netresearch.de/
  */
-class Service
+class Service implements ServiceInterface
 {
     /**
      * Enter II if you wish to get a quote for Insurance with your prospect shipment. If not needed

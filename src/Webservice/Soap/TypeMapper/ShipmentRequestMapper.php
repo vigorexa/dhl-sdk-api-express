@@ -156,7 +156,8 @@ class ShipmentRequestMapper
             $request->getShipmentDetails()->getContentType()
         );
 
-        $specialServicesList = [];
+        // initialize with existing special services
+        $specialServicesList = $request->getSpecialServices();
         if ($insurance = $request->getInsurance()) {
             $insuranceService = new Service(SpecialServices\ServiceType::TYPE_INSURANCE);
             $insuranceService->setServiceValue($insurance->getValue());

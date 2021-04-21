@@ -15,6 +15,7 @@ use Dhl\Express\Model\Request\Shipment\LabelOptions;
 use Dhl\Express\Model\Request\Shipment\ShipmentDetails;
 use Dhl\Express\Model\Request\Shipment\Shipper;
 use Dhl\Express\Model\ShipmentRequest;
+use Dhl\Express\Webservice\Soap\Type\Common\SpecialServices;
 
 /**
  * Shipment Request Builder.
@@ -328,6 +329,13 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         return $this;
     }
 
+    public function setSpecialService(SpecialServices\Service $service)
+    {
+        $this->data['specialServices'][] = $service;
+
+        return $this;
+    }
+
     public function build(): ShipmentRequestInterface
     {
         // Build shipment details
@@ -393,6 +401,10 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
 
         if (!empty($this->data['billingAccountNumber'])) {
             $request->setBillingAccountNumber($this->data['billingAccountNumber']);
+        }
+
+        if (isset($this->data['specialServices'])) {
+            $request->setSpecialServices($this->data['specialServices']);
         }
 
         // Build insurance

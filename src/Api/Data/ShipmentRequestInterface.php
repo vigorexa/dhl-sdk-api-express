@@ -8,6 +8,7 @@ namespace Dhl\Express\Api\Data;
 use Dhl\Express\Api\Data\Request\InsuranceInterface;
 use Dhl\Express\Api\Data\Request\PackageInterface;
 use Dhl\Express\Api\Data\Request\RecipientInterface;
+use Dhl\Express\Api\Data\Request\ServiceInterface;
 use Dhl\Express\Api\Data\Request\Shipment\DangerousGoods\DryIceInterface;
 use Dhl\Express\Api\Data\Request\Shipment\LabelOptionsInterface;
 use Dhl\Express\Api\Data\Request\Shipment\ShipmentDetailsInterface;
@@ -69,4 +70,9 @@ interface ShipmentRequestInterface
      * @return null|LabelOptionsInterface
      */
     public function getLabelOptions(): ?LabelOptionsInterface;
+
+    /**
+     * @return ServiceInterface[]
+     */
+    public function getSpecialServices(): array;
 }
