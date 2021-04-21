@@ -128,6 +128,16 @@ class ShipmentDetails implements ShipmentDetailsInterface
     private $serviceType;
 
     /**
+     * @var string
+     */
+    private $specialPickupInstructions;
+
+    /**
+     * @var string
+     */
+    private $paperlessDocument;
+
+    /**
      * ShipmentDetails constructor.
      *
      * @param bool $unscheduledPickup
@@ -210,5 +220,15 @@ class ShipmentDetails implements ShipmentDetailsInterface
     public function getServiceType()
     {
         return (string) $this->serviceType;
+    }
+
+    public function getSpecialShipmentInstructions()
+    {
+        return (string) $this->specialPickupInstructions;
+    }
+
+    public function getPaperlessEncodedStringDocument()
+    {
+        return (string) $this->paperlessDocument;
     }
 }
