@@ -5,6 +5,7 @@
 namespace Dhl\Express\Model\Request;
 
 use Dhl\Express\Api\Data\Request\InsuranceInterface;
+use Dhl\Express\Webservice\Soap\Type\Common\SpecialServices\ServiceType;
 
 /**
  * Insurance.
@@ -12,7 +13,7 @@ use Dhl\Express\Api\Data\Request\InsuranceInterface;
  * @author   Ronny Gertler <ronny.gertler@netresearch.de>
  * @link     https://www.netresearch.de/
  */
-class Insurance implements InsuranceInterface
+class Insurance extends ServiceType implements InsuranceInterface
 {
     /**
      * The value of the insurance.

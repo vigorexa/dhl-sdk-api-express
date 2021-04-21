@@ -83,4 +83,18 @@ interface ShipmentDetailsInterface
      * @return string
      */
     public function getServiceType();
+
+    /**
+     * Returns special shipment instructions.
+     *
+     * @return string
+     */
+    public function getSpecialShipmentInstructions();
+
+    /**
+     * If paperless
+     *
+     * @return string
+     */
+    public function getPaperlessEncodedStringDocument();
 }

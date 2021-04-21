@@ -61,6 +61,15 @@ class ShipmentRequestMapper
             $this->mapUOM($weightUOM, $dimensionsUOM)
         );
 
+        if (!empty($request->getShipmentDetails()->getSpecialShipmentInstructions())) {
+            $shipmentInfo->setSpecialPickupInstructions($request->getShipmentDetails()->getSpecialShipmentInstructions());
+        }
+
+        if (!empty($request->getShipmentDetails()->getPaperlessEncodedStringDocument())) {
+            $shipmentInfo->setPaperlessTradeEnabled(true);
+            $shipmentInfo->setPaperlessTradeImage($request->getShipmentDetails()->getPaperlessEncodedStringDocument());
+        }
+
         // Create ship
         $ship = new Ship(
             new Ship\ContactInfo(
@@ -163,6 +172,11 @@ class ShipmentRequestMapper
             $insuranceService->setServiceValue($insurance->getValue());
             $insuranceService->setCurrencyCode($insurance->getCurrencyCode());
             $specialServicesList[] = $insuranceService;
+        }
+
+        if ($shipmentInfo->getPaperlessTradeEnabled()) {
+            $paperlessTradeService = new Service(SpecialServices\ServiceType::TYPE_PLT);
+            $specialServicesList[] = $paperlessTradeService;
         }
 
         if (!empty($specialServicesList)) {

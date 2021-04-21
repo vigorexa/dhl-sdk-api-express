@@ -336,6 +336,20 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         return $this;
     }
 
+    public function setSpecialPickupInstructions($specialInstructions)
+    {
+        $this->data['specialPickupInstructions'] = $specialInstructions;
+
+        return $this;
+    }
+
+    public function setPaperlessDocumentString($documentString)
+    {
+        $this->data['paperlessDocument'] = $documentString;
+
+        return $this;
+    }
+
     public function build(): ShipmentRequestInterface
     {
         // Build shipment details

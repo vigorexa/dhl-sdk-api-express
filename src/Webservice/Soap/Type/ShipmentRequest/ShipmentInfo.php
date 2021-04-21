@@ -174,6 +174,13 @@ class ShipmentInfo
     private $PaperlessTradeImage;
 
     /**
+     * Special pickup instructions.
+     *
+     * @var null|SpecialPickupInstruction
+     */
+    private $SpecialPickupInstructions;
+
+    /**
      * Constructor.
      *
      * @param string $dropOffType       The drop off type
@@ -581,6 +588,26 @@ class ShipmentInfo
     {
         $this->PaperlessTradeImage = $paperlessTradeImage;
         return $this;
+    }
+
+    /**
+     * @param string|null $specialPickupInstructions
+     *
+     * @return self
+     */
+    public function setSpecialPickupInstructions($specialPickupInstructions)
+    {
+        $this->SpecialPickupInstructions = new SpecialPickupInstruction($specialPickupInstructions);
+
+        return $this;
+    }
+
+    /**
+     * @return SpecialPickupInstruction|null
+     */
+    public function getSpecialPickupInstructions()
+    {
+        return $this->SpecialPickupInstructions;
     }
 
     /**

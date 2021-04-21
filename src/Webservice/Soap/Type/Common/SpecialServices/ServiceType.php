@@ -20,6 +20,7 @@ class ServiceType implements ValueInterface
      */
     /** @var string */
     const TYPE_INSURANCE = 'II';
+    const TYPE_PLT = 'WY'; // paperless trade
 
     /**
      * The service type.
