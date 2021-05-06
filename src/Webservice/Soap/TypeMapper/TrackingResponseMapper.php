@@ -127,8 +127,8 @@ class TrackingResponseMapper
             $events[] = new TrackingInfo\ShipmentEvent(
                 $shipmentEvent->getDate(),
                 $shipmentEvent->getTime(),
-                $shipmentEvent->getServiceArea()->getDescription(),
-                $shipmentEvent->getServiceEvent()->getDescription()
+                $shipmentEvent->getServiceArea(),
+                $shipmentEvent->getServiceEvent()
             );
         }
 
