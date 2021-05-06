@@ -9,6 +9,7 @@ use Dhl\Express\Webservice\Soap\Type\SoapTrackingRequest;
 use Dhl\Express\Webservice\Soap\Type\Tracking\AWBNumberCollection;
 use Dhl\Express\Webservice\Soap\Type\Tracking\Request;
 use Dhl\Express\Webservice\Soap\Type\Tracking\ServiceHeader;
+use Dhl\Express\Webservice\Soap\Type\Tracking\TrackingPieceIDCollection;
 use Dhl\Express\Webservice\Soap\Type\Tracking\TrackingRequest;
 use Dhl\Express\Webservice\Soap\Type\Tracking\TrackingRequestBase;
 
@@ -47,9 +48,15 @@ class TrackingRequestMapper
             )
         );
 
-        $soapTrackingRequest->getTrackingRequest()->getTrackingRequest()->setAWBNumber(
-            new AWBNumberCollection($trackingRequest->getAwbNumber())
-        );
+        if (!empty($trackingRequest->getAwbNumber())) {
+            $soapTrackingRequest->getTrackingRequest()->getTrackingRequest()->setAWBNumber(
+                new AWBNumberCollection($trackingRequest->getAwbNumber())
+            );
+        } else {
+            $soapTrackingRequest->getTrackingRequest()->getTrackingRequest()->setLPNumber(
+                new TrackingPieceIDCollection($trackingRequest->getLpNumber())
+            );
+        }
 
         $soapTrackingRequest->getTrackingRequest()->getTrackingRequest()->setPiecesEnabled(
             $trackingRequest->getPiecesEnabled()

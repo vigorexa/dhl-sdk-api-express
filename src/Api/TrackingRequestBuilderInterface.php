@@ -41,6 +41,22 @@ interface TrackingRequestBuilderInterface
     public function addAwbNumber($awbNumber);
 
     /**
+     * Sets the tracking Licence Plate numbers.
+     *
+     * @param string[] $lpNumbers
+     * @return TrackingRequestBuilderInterface
+     */
+    public function setLpNumbers(array $lpNumbers);
+
+    /**
+     * Adds a tracking Licence Plate number.
+     *
+     * @param string $lpNumber
+     * @return TrackingRequestBuilderInterface
+     */
+    public function addLpNumber($lpNumber);
+
+    /**
      * Sets the tracking's level of details.
      *
      * @param string $levelOfDetails

@@ -32,6 +32,14 @@ interface TrackingRequestInterface
      */
     public function getAwbNumber();
 
+
+    /**
+     * Returns the tracking information's LP numbers
+     *
+     * @return string[]
+     */
+    public function getLpNumber();
+
     /**
      * Returns the tracking information's level of details
      *

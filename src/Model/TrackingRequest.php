@@ -7,6 +7,7 @@ namespace Dhl\Express\Model;
 
 use Dhl\Express\Api\Data\Request\Tracking\MessageInterface;
 use Dhl\Express\Api\Data\TrackingRequestInterface;
+use Dhl\Express\Webservice\Soap\Type\Tracking\LanguageCode;
 
 /**
  * TrackingRequest Class.
@@ -24,7 +25,12 @@ class TrackingRequest implements TrackingRequestInterface
     /**
      * @var string[]
      */
-    private $awbNumber;
+    private $awbNumbers;
+
+    /**
+     * @var string[]
+     */
+    private $lpNumbers;
 
     /**
      * @var string
@@ -50,25 +56,36 @@ class TrackingRequest implements TrackingRequestInterface
      * TrackingRequest constructor.
      *
      * @param MessageInterface $message
-     * @param string[]         $awbNumber
+     * @param string[]         $awbOrLpNumbers
      * @param string           $levelOfDetails
      * @param string           $piecesEnabled
      * @param bool             $estimatedDeliveryDate
      * @param string           $languageCode
+     * @param bool             $useLpNumbers
      */
     public function __construct(
         MessageInterface $message,
-        array $awbNumber,
-        $levelOfDetails,
-        $piecesEnabled,
-        $estimatedDeliveryDate,
-        $languageCode = LanguageCode::__DEFAULT
+        array $awbOrLpNumbers,
+        string $levelOfDetails,
+        string $piecesEnabled,
+        bool $estimatedDeliveryDate,
+        string $languageCode = LanguageCode::__DEFAULT,
+        bool $useLpNumbers = false
     ) {
         $this->message = $message;
-        $this->awbNumber = $awbNumber;
+        if ($useLpNumbers) {
+            $this->lpNumbers = $awbOrLpNumbers;
+        } else {
+            $this->awbNumbers = $awbOrLpNumbers;
+        }
         $this->levelOfDetails = $levelOfDetails;
         $this->piecesEnabled = $piecesEnabled;
         $this->estimatedDeliveryDate = $estimatedDeliveryDate;
+
+        if (!in_array($languageCode, LanguageCode::$supportedLanguageCodes)) {
+            throw new \InvalidArgumentException("Unsupported language code $languageCode");
+        }
+
         $this->languageCode = $languageCode;
     }
 
@@ -79,7 +96,12 @@ class TrackingRequest implements TrackingRequestInterface
 
     public function getAwbNumber()
     {
-        return $this->awbNumber;
+        return $this->awbNumbers;
+    }
+
+    public function getLpNumber()
+    {
+        return $this->lpNumbers;
     }
 
     public function getLevelOfDetails()

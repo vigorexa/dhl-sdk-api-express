@@ -20,7 +20,7 @@ class TrackingRequestBuilder implements TrackingRequestBuilderInterface
     /**
      * The collected data used to build the tracking request.
      *
-     * @var mixed[]
+     * @var array
      */
     private $data = [];
 
@@ -46,6 +46,16 @@ class TrackingRequestBuilder implements TrackingRequestBuilderInterface
         $this->data['awb_numbers'][] = $awbNumber;
 
         return $this;
+    }
+
+    public function setLpNumbers(array $lpNumbers)
+    {
+        $this->data['lp_numbers'] = $lpNumbers;
+    }
+
+    public function addLpNumber($lpNumber)
+    {
+        $this->data['lp_numbers'][] = $lpNumber;
     }
 
     public function setLevelOfDetails($levelOfDetails)
@@ -78,20 +88,19 @@ class TrackingRequestBuilder implements TrackingRequestBuilderInterface
 
     public function build()
     {
-        $eddEnabled = isset($this->data['estimated_delivery_date'])
-            ? $this->data['estimated_delivery_date']
-            : false;
+        $useLpNumbers = isset($this->data['lp_numbers']) && !empty($this->data['lp_numbers']);
 
         $request = new TrackingRequest(
             new Message(
                 $this->data['message']['time'],
                 $this->data['message']['reference']
             ),
-            $this->data['awb_numbers'],
+            $useLpNumbers ? $this->data['lp_numbers'] : $this->data['awb_numbers'],
             $this->data['level_of_details'],
             $this->data['pieces_enabled'],
-            $eddEnabled,
-            $this->data['language_code']
+            $this->data['estimated_delivery_date'] ?? false,
+            $this->data['language_code'],
+            $useLpNumbers
         );
 
         $this->data = [];
