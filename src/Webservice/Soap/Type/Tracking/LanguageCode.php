@@ -46,38 +46,52 @@ class LanguageCode {
     const SLV = 'slv'; // Slovenian
     const ALB = 'alb'; // Albanian
 
+    /**
+     * @var string[]
+     */
     static $supportedLanguageCodes = [
-        self::ENG,
-        self::FRE,
-        self::BAK,
-        self::BUL,
-        self::CZE,
-        self::DAN,
-        self::GER,
-        self::EWE,
-        self::GRE,
-        self::SPA,
-        self::EST,
-        self::FIN,
-        self::HEB,
-        self::HRV,
-        self::HUN,
-        self::IND,
-        self::ITA,
-        self::JPN,
-        self::KOR,
-        self::LIT,
-        self::LAV,
-        self::MAC,
-        self::DUT,
-        self::NOR,
-        self::POL,
-        self::POR,
-        self::RUM,
-        self::RUS,
-        self::SRD,
-        self::SLO,
-        self::SLV,
-        self::ALB,
+        "en" => self::ENG,
+        "fr" => self::FRE,
+        "ba" => self::BAK,
+        "bg" => self::BUL,
+        "cs" => self::CZE,
+        "da" => self::DAN,
+        "de" => self::GER,
+        "ee" => self::EWE,
+        "el" => self::GRE,
+        "es" => self::SPA,
+        "et" => self::EST,
+        "fi" => self::FIN,
+        "he" => self::HEB,
+        "hr" => self::HRV,
+        "hu" => self::HUN,
+        "id" => self::IND,
+        "it" => self::ITA,
+        "ja" => self::JPN,
+        "ko" => self::KOR,
+        "lt" => self::LIT,
+        "lv" => self::LAV,
+        "mk" => self::MAC,
+        "nl" => self::DUT,
+        "no" => self::NOR,
+        "pl" => self::POL,
+        "pt" => self::POR,
+        "ro" => self::RUM,
+        "ru" => self::RUS,
+        "sc" => self::SRD,
+        "sk" => self::SLO,
+        "sl" => self::SLV,
+        "sq" => self::ALB,
     ];
+
+    /**
+     * @param string $iso2
+     * @return string
+     */
+    public static function isoToDhlLanguageCode(string $iso2) {
+        if (strlen($iso2) === 3) {
+            return $iso2;
+        }
+        return array_key_exists($iso2, self::$supportedLanguageCodes) ? self::$supportedLanguageCodes[$iso2] : $iso2;
+    }
 }

@@ -82,6 +82,7 @@ class TrackingRequest implements TrackingRequestInterface
         $this->piecesEnabled = $piecesEnabled;
         $this->estimatedDeliveryDate = $estimatedDeliveryDate;
 
+        $languageCode = LanguageCode::isoToDhlLanguageCode($languageCode);
         if (!in_array($languageCode, LanguageCode::$supportedLanguageCodes)) {
             throw new \InvalidArgumentException("Unsupported language code $languageCode");
         }
