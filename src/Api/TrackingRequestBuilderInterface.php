@@ -65,6 +65,15 @@ interface TrackingRequestBuilderInterface
     public function setEstimatedDeliveryDateRequested($eddRequested);
 
     /**
+     * The language code requested by user.
+     * @see LanguageCode
+     *
+     * @param $languageCode
+     * @return TrackingRequestBuilderInterface
+     */
+    public function setLanguageCode($languageCode);
+
+    /**
      * Builds the tracking request instance.
      *
      * @return TrackingRequestInterface

@@ -45,6 +45,11 @@ class TrackingRequest
     protected $EstimatedDeliveryDateEnabled;
 
     /**
+     * @var string
+     */
+    protected $LanguageCode;
+
+    /**
      * @param Request $Request
      * @param string  $LevelOfDetails
      */
@@ -165,6 +170,23 @@ class TrackingRequest
     public function setEstimatedDeliveryDateEnabled($EstimatedDeliveryDateEnabled)
     {
         $this->EstimatedDeliveryDateEnabled = $EstimatedDeliveryDateEnabled;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguageCode() {
+        return $this->LanguageCode;
+    }
+
+    /**
+     * @param string $LanguageCode
+     * @return $this
+     */
+    public function setLanguageCode(string $LanguageCode) {
+        $this->LanguageCode = $LanguageCode;
 
         return $this;
     }

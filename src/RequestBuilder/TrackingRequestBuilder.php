@@ -69,6 +69,13 @@ class TrackingRequestBuilder implements TrackingRequestBuilderInterface
         return $this;
     }
 
+    public function setLanguageCode($languageCode)
+    {
+        $this->data['language_code'] = $languageCode;
+
+        return $this;
+    }
+
     public function build()
     {
         $eddEnabled = isset($this->data['estimated_delivery_date'])
@@ -83,7 +90,8 @@ class TrackingRequestBuilder implements TrackingRequestBuilderInterface
             $this->data['awb_numbers'],
             $this->data['level_of_details'],
             $this->data['pieces_enabled'],
-            $eddEnabled
+            $eddEnabled,
+            $this->data['language_code']
         );
 
         $this->data = [];

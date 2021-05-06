@@ -52,4 +52,11 @@ interface TrackingRequestInterface
      * @return bool
      */
     public function isEstimatedDeliveryDateRequested();
+
+    /**
+     * The language code requested by user.
+     *
+     * @return string
+     */
+    public function getLanguageCode();
 }

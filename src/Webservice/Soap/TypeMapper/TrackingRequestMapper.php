@@ -59,6 +59,10 @@ class TrackingRequestMapper
             $trackingRequest->isEstimatedDeliveryDateRequested()
         );
 
+        $soapTrackingRequest->getTrackingRequest()->getTrackingRequest()->setLanguageCode(
+            $trackingRequest->getLanguageCode()
+        );
+
         return $soapTrackingRequest;
     }
 }

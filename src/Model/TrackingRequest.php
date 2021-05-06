@@ -42,6 +42,11 @@ class TrackingRequest implements TrackingRequestInterface
     private $estimatedDeliveryDate;
 
     /**
+     * @var string
+     */
+    private $languageCode;
+
+    /**
      * TrackingRequest constructor.
      *
      * @param MessageInterface $message
@@ -49,19 +54,22 @@ class TrackingRequest implements TrackingRequestInterface
      * @param string           $levelOfDetails
      * @param string           $piecesEnabled
      * @param bool             $estimatedDeliveryDate
+     * @param string           $languageCode
      */
     public function __construct(
         MessageInterface $message,
         array $awbNumber,
         $levelOfDetails,
         $piecesEnabled,
-        $estimatedDeliveryDate
+        $estimatedDeliveryDate,
+        $languageCode = LanguageCode::__DEFAULT
     ) {
         $this->message = $message;
         $this->awbNumber = $awbNumber;
         $this->levelOfDetails = $levelOfDetails;
         $this->piecesEnabled = $piecesEnabled;
         $this->estimatedDeliveryDate = $estimatedDeliveryDate;
+        $this->languageCode = $languageCode;
     }
 
     public function getMessage()
@@ -87,5 +95,10 @@ class TrackingRequest implements TrackingRequestInterface
     public function isEstimatedDeliveryDateRequested()
     {
         return (bool) $this->estimatedDeliveryDate;
+    }
+
+    public function getLanguageCode()
+    {
+        return (string) $this->languageCode;
     }
 }
