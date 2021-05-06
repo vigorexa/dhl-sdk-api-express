@@ -8,6 +8,7 @@ namespace Dhl\Express\RequestBuilder;
 use Dhl\Express\Api\TrackingRequestBuilderInterface;
 use Dhl\Express\Model\Request\Tracking\Message;
 use Dhl\Express\Model\TrackingRequest;
+use Dhl\Express\Webservice\Soap\Type\Tracking\LanguageCode;
 
 /**
  * Tracking Request Builder.
@@ -99,7 +100,7 @@ class TrackingRequestBuilder implements TrackingRequestBuilderInterface
             $this->data['level_of_details'],
             $this->data['pieces_enabled'],
             $this->data['estimated_delivery_date'] ?? false,
-            $this->data['language_code'],
+            $this->data['language_code'] ?? LanguageCode::__DEFAULT,
             $useLpNumbers
         );
 
