@@ -56,6 +56,7 @@ class ShipmentEvent implements ShipmentEventInterface
     const SHIPMENT_ACKNOWLEDGED = 'SA';
     const RECORD_OF_TRANSIT = 'TR';
     const WITH_DELIVERY_COURIER = 'WC';
+    const RESPONSE_RECEIVED = 'RR';
 
     // Service Incident Event Codes
     const BAD_ADDRESS = 'BA';
@@ -101,6 +102,7 @@ class ShipmentEvent implements ShipmentEventInterface
         self::SHIPMENT_ACKNOWLEDGED,
         self::RECORD_OF_TRANSIT,
         self::WITH_DELIVERY_COURIER,
+        self::RESPONSE_RECEIVED,
     ];
 
     /**
