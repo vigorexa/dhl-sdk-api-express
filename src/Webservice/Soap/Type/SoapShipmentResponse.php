@@ -2,6 +2,7 @@
 /**
  * See LICENSE.md for license details.
  */
+
 namespace Dhl\Express\Webservice\Soap\Type;
 
 use Dhl\Express\Webservice\Soap\Type\Common\Notification;
@@ -55,6 +56,11 @@ class SoapShipmentResponse
     private $DispatchConfirmationNumber;
 
     /**
+     * @var array|null
+     */
+    private $Documents;
+
+    /**
      * Returns the response notification.
      *
      * @return Notification[] Array of Notification
@@ -102,5 +108,13 @@ class SoapShipmentResponse
     public function getDispatchConfirmationNumber()
     {
         return $this->DispatchConfirmationNumber;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getDocuments()
+    {
+        return $this->Documents ? $this->Documents->Document : [];
     }
 }

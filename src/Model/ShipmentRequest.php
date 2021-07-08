@@ -16,6 +16,7 @@ use Dhl\Express\Api\Data\ShipmentRequestInterface;
 use Dhl\Express\Model\Request\Recipient;
 use Dhl\Express\Model\Request\Shipment\Shipper;
 use Dhl\Express\Webservice\Soap\Type\Common\SpecialServices;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportDeclaration;
 
 /**
  * Shipment Request.
@@ -76,6 +77,11 @@ class ShipmentRequest implements ShipmentRequestInterface
     private $specialServices = [];
 
     /**
+     * @var ExportDeclaration
+     */
+    private $exportDeclaration;
+
+    /**
      * SoapShipmentRequest constructor.
      *
      * @param ShipmentDetailsInterface $shipmentDetails
@@ -90,7 +96,8 @@ class ShipmentRequest implements ShipmentRequestInterface
         ShipperInterface $shipper,
         RecipientInterface $recipient,
         array $packages
-    ) {
+    )
+    {
         $this->shipmentDetails = $shipmentDetails;
         $this->payerAccountNumber = $payerAccountNumber;
         $this->shipper = $shipper;
@@ -105,7 +112,7 @@ class ShipmentRequest implements ShipmentRequestInterface
 
     public function getPayerAccountNumber(): string
     {
-        return (string) $this->payerAccountNumber;
+        return (string)$this->payerAccountNumber;
     }
 
     public function getShipper(): ShipperInterface
@@ -125,7 +132,7 @@ class ShipmentRequest implements ShipmentRequestInterface
 
     public function getBillingAccountNumber(): string
     {
-        return (string) $this->billingAccountNumber;
+        return (string)$this->billingAccountNumber;
     }
 
     public function getInsurance(): ?InsuranceInterface
@@ -213,6 +220,18 @@ class ShipmentRequest implements ShipmentRequestInterface
     public function setSpecialServices(array $services): ShipmentRequestInterface
     {
         $this->specialServices = $services;
+
+        return $this;
+    }
+
+    public function getExportDeclaration(): ?ExportDeclaration
+    {
+        return $this->exportDeclaration;
+    }
+
+    public function setExportDeclaration(ExportDeclaration $exportDeclaration)
+    {
+        $this->exportDeclaration = $exportDeclaration;
 
         return $this;
     }

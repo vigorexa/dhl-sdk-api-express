@@ -14,6 +14,8 @@ use Dhl\Express\Model\Request\Shipment\Shipper;
 use Dhl\Express\Model\ShipmentRequest;
 use Dhl\Express\Webservice\Soap\Type\Common\DropOffType;
 use Dhl\Express\Webservice\Soap\Type\Common\SpecialServices;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportDeclaration;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportLineItem;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\Packages\RequestedPackages;
 use Dhl\Express\Webservice\Soap\Type\SoapShipmentRequest;
 use PHPUnit\Framework\TestCase;
@@ -87,6 +89,10 @@ class ShipmentRequestMapperTest extends TestCase
             'TEST CZ-IT'
         );
 
+        $exportDeclaration = new ExportDeclaration([
+            new ExportLineItem(1, "Test 123", 10, 5, 5, 1, ExportLineItem::UOM_QUANTITY_PCS),
+        ]);
+
         $packages = [$package, $package];
 
         $dryIce = new DryIce(
@@ -106,6 +112,8 @@ class ShipmentRequestMapperTest extends TestCase
 
         $request->setInsurance($insurance)
             ->setDryIce($dryIce);
+
+        $request->setExportDeclaration($exportDeclaration);
 
         // Map Shipment Request to SOAP Shipment Request
 
@@ -152,6 +160,11 @@ class ShipmentRequestMapperTest extends TestCase
         self::assertEquals(
             $customsValue,
             $soapRequest->getRequestedShipment()->getInternationalDetail()->getCommodities()->getCustomsValue()->getValue()
+        );
+
+        self::assertEquals(
+            $exportDeclaration,
+            $soapRequest->getRequestedShipment()->getInternationalDetail()->getExportDeclaration()
         );
 
         self::assertEquals(

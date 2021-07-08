@@ -113,7 +113,8 @@ class ShipmentRequestMapper
             $request->getShipmentDetails()->getReadyAtTimestamp(),
             $request->getShipmentDetails()->getTermsOfTrade(),
             new InternationalDetail(
-                $commodities
+                $commodities,
+                $request->getExportDeclaration()
             ),
             $ship,
             new Packages(
@@ -202,7 +203,8 @@ class ShipmentRequestMapper
         if ($labelOptions instanceof LabelOptionsInterface) {
             $requestedShipment->getShipmentInfo()->setLabelOptions(
                 new LabelOptions(
-                    new LabelOptions\RequestWaybillDocument($labelOptions->isWaybillDocumentRequested())
+                    new LabelOptions\RequestWaybillDocument($labelOptions->isWaybillDocumentRequested()),
+                    new LabelOptions\RequestDHLCustomsInvoice($labelOptions->isWaybillDocumentRequested())
                 )
             );
         }
