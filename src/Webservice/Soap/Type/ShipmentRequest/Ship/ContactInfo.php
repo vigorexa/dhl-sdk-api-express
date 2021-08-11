@@ -2,6 +2,7 @@
 /**
  * See LICENSE.md for license details.
  */
+
 namespace Dhl\Express\Webservice\Soap\Type\ShipmentRequest\Ship;
 
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\Ship\Address as ShipmentAddress;
@@ -30,15 +31,23 @@ class ContactInfo
     private $Address;
 
     /**
+     * @var RegistrationNumbers
+     */
+    private $RegistrationNumbers;
+
+    /**
      * Constructor.
      *
-     * @param Contact         $contact The contact
+     * @param Contact $contact The contact
      * @param ShipmentAddress $address The address
      */
-    public function __construct(Contact $contact, ShipmentAddress $address)
+    public function __construct(Contact $contact, ShipmentAddress $address, RegistrationNumbers $registrationNumbers = null)
     {
         $this->setContact($contact)
             ->setAddress($address);
+        if ($registrationNumbers) {
+            $this->setRegistrationNumbers($registrationNumbers);
+        }
     }
 
     /**
@@ -85,5 +94,17 @@ class ContactInfo
     {
         $this->Address = $address;
         return $this;
+    }
+
+    private function setRegistrationNumbers(RegistrationNumbers $registrationNumbers)
+    {
+        $this->RegistrationNumbers = $registrationNumbers;
+
+        return $this;
+    }
+
+    public function getRegistrationNumbers()
+    {
+        return $this->RegistrationNumbers;
     }
 }

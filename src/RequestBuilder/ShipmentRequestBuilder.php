@@ -261,7 +261,7 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         string $countryCode,
         string $postalCode,
         string $city,
-        array $streetLines,
+        array  $streetLines,
         string $name,
         string $company,
         string $phone,
@@ -282,11 +282,31 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         return $this;
     }
 
+    public function setShipperRegistrationNumber(string $registrationNumber, string $registrationTypeCode): ShipmentRequestBuilderInterface
+    {
+        $this->data['shipper']['registrationNumbers'][] = [
+            'registrationNumber' => $registrationNumber,
+            'registrationTypeCode' => $registrationTypeCode,
+        ];
+
+        return $this;
+    }
+
+    public function setRecipientRegistrationNumber(string $registrationNumber, string $registrationTypeCode): ShipmentRequestBuilderInterface
+    {
+        $this->data['recipient']['registrationNumbers'][] = [
+            'registrationNumber' => $registrationNumber,
+            'registrationTypeCode' => $registrationTypeCode,
+        ];
+
+        return $this;
+    }
+
     public function setRecipient(
         string $countryCode,
         string $postalCode,
         string $city,
-        array $streetLines,
+        array  $streetLines,
         string $name,
         string $company,
         string $phone,
@@ -308,12 +328,12 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
     }
 
     public function addPackage(
-        int $sequenceNumber,
-        float $weight,
+        int    $sequenceNumber,
+        float  $weight,
         string $weightUOM,
-        float $length,
-        float $width,
-        float $height,
+        float  $length,
+        float  $width,
+        float  $height,
         string $dimensionsUOM,
         string $customerReferences
     ): ShipmentRequestBuilderInterface
@@ -393,6 +413,16 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
             $this->data['shipper']['email']
         );
 
+        if (isset($this->data['shipper']['registrationNumbers']) && !empty($this->data['shipper']['registrationNumbers'])) {
+            foreach ($this->data['shipper']['registrationNumbers'] as $registrationNumberData) {
+                $shipper->setRegistrationNumber(
+                    $registrationNumberData['registrationNumber'],
+                    $registrationNumberData['registrationTypeCode'],
+                    $registrationNumberData['registrationCountryCode'] ?? $this->data['shipper']['countryCode']
+                );
+            }
+        }
+
         // Build recipient
         $recipient = new Recipient(
             $this->data['recipient']['countryCode'],
@@ -404,6 +434,16 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
             $this->data['recipient']['phone'],
             $this->data['recipient']['email']
         );
+
+        if (isset($this->data['recipient']['registrationNumbers']) && !empty($this->data['recipient']['registrationNumbers'])) {
+            foreach ($this->data['recipient']['registrationNumbers'] as $registrationNumberData) {
+                $recipient->setRegistrationNumber(
+                    $registrationNumberData['registrationNumber'],
+                    $registrationNumberData['registrationTypeCode'],
+                    $registrationNumberData['registrationCountryCode'] ?? $this->data['recipient']['countryCode']
+                );
+            }
+        }
 
         // build packages
         $packages = [];
