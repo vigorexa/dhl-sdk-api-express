@@ -16,6 +16,7 @@ use Dhl\Express\Model\Request\Shipment\ShipmentDetails;
 use Dhl\Express\Model\Request\Shipment\Shipper;
 use Dhl\Express\Model\ShipmentRequest;
 use Dhl\Express\Webservice\Soap\Type\Common\SpecialServices;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportDeclaration;
 
 /**
  * Shipment Request Builder.
@@ -36,8 +37,8 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
      * Normalizes the weight and unit of measurement to the unit of measurement KG (kilograms) or LB (Pound)
      * supported by the DHL express webservice.
      *
-     * @param float  $weight The weight
-     * @param string $uom    The unit of measurement
+     * @param float $weight The weight
+     * @param string $uom The unit of measurement
      *
      * @return float[]|string[]
      */
@@ -80,10 +81,10 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
      * Normalizes the dimensions to the unit of measurement CM (centimeter) or IN (inch) supported by the
      * DHL express webservice.
      *
-     * @param float  $length The length of a package
-     * @param float  $width  The width of a package
-     * @param float  $height The height of a package
-     * @param string $uom    The unit of measurement
+     * @param float $length The length of a package
+     * @param float $width The width of a package
+     * @param float $height The height of a package
+     * @param string $uom The unit of measurement
      *
      * @return float[]|string[]
      */
@@ -237,10 +238,22 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
 
     public function setWaybillDocumentRequested(bool $isRequested): ShipmentRequestBuilderInterface
     {
-        $this->data['labelOptions'] = [
-            'waybillDocument' => $isRequested
-        ];
+        $this->data['labelOptions']['waybillDocument'] = $isRequested;
 
+        return $this;
+    }
+
+    public function setDhlCustomsInvoiceRequested(bool $isRequested, string $documentType): ShipmentRequestBuilderInterface
+    {
+        $this->data['labelOptions']['dhlCustomsInvoice'] = $isRequested;
+        $this->data['labelOptions']['dHLCustomsInvoiceType'] = $documentType;
+
+        return $this;
+    }
+
+    public function setLabelOptions(array $options)
+    {
+        $this->data['labelOptions'] = $options;
         return $this;
     }
 
@@ -253,7 +266,8 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         string $company,
         string $phone,
         string $email = null
-    ): ShipmentRequestBuilderInterface {
+    ): ShipmentRequestBuilderInterface
+    {
         $this->data['shipper'] = [
             'countryCode' => $countryCode,
             'postalCode' => $postalCode,
@@ -277,7 +291,8 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         string $company,
         string $phone,
         string $email = null
-    ): ShipmentRequestBuilderInterface {
+    ): ShipmentRequestBuilderInterface
+    {
         $this->data['recipient'] = [
             'countryCode' => $countryCode,
             'postalCode' => $postalCode,
@@ -301,13 +316,14 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         float $height,
         string $dimensionsUOM,
         string $customerReferences
-    ): ShipmentRequestBuilderInterface {
+    ): ShipmentRequestBuilderInterface
+    {
         $weightDetails = $this->normalizeWeight($weight, strtoupper($weightUOM));
         $dimensionsDetails = $this->normalizeDimensions($length, $width, $height, strtoupper($dimensionsUOM));
 
         $this->data['packages'][] = [
             'sequenceNumber' => $sequenceNumber,
-            'weight' => round((float) $weightDetails['weight'], 3),
+            'weight' => round((float)$weightDetails['weight'], 3),
             'weightUOM' => $weightDetails['uom'],
             'length' => $dimensionsDetails['length'],
             'width' => $dimensionsDetails['width'],
@@ -441,10 +457,15 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
             $request->setDryIce($dryIce);
         }
 
+        if (isset($this->data['exportDeclaration'])) {
+            $request->setExportDeclaration($this->data['exportDeclaration']);
+        }
+
         // build label options
         if (!empty($this->data['labelOptions']) && isset($this->data['labelOptions']['waybillDocument'])) {
             $labelOptions = new LabelOptions(
-                $this->data['labelOptions']['waybillDocument']
+                $this->data['labelOptions']['waybillDocument'],
+                $this->data['labelOptions']['dhlCustomsInvoice']
             );
 
             $request->setLabelOptions($labelOptions);
@@ -453,5 +474,12 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         $this->data = [];
 
         return $request;
+    }
+
+    public function setExportDeclaration(ExportDeclaration $exportDeclaration): ShipmentRequestBuilderInterface
+    {
+        $this->data['exportDeclaration'] = $exportDeclaration;
+
+        return $this;
     }
 }

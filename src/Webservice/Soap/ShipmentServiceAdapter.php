@@ -82,6 +82,9 @@ class ShipmentServiceAdapter implements ShipmentServiceAdapterInterface, Traceab
 
         try {
             $soapResponse = $this->client->__soapCall('createShipmentRequest', [ $soapRequest ]);
+
+            file_put_contents("request.xml", $this->getLastRequest());
+            file_put_contents("response.xml", $this->getLastResponse());
         } catch (\SoapFault $e) {
             throw new SoapException(sprintf('Could not access SOAP webservice: %s', $e->getMessage()), 0, $e);
         }

@@ -51,6 +51,11 @@ class AlphaNumeric implements ValueInterface
         $this->value = $value;
     }
 
+    public function getValue()
+    {
+        return $this->value;
+    }
+
     /**
      * Returns the value as string.
      *
@@ -58,6 +63,6 @@ class AlphaNumeric implements ValueInterface
      */
     public function __toString()
     {
-        return $this->value;
+        return $this->getValue();
     }
 }

@@ -13,14 +13,24 @@ class LabelOptions implements LabelOptionsInterface
      * @var bool
      */
     private $waybillDocumentRequested;
+    /**
+     * @var bool
+     */
+    private $dhlCustomsInvoiceRequested;
 
-    public function __construct(bool $waybillDocumentRequested)
+    public function __construct(bool $waybillDocumentRequested, bool $dhlCustomsInvoiceRequested = false)
     {
         $this->waybillDocumentRequested = $waybillDocumentRequested;
+        $this->dhlCustomsInvoiceRequested = $dhlCustomsInvoiceRequested;
     }
 
     public function isWaybillDocumentRequested(): bool
     {
         return $this->waybillDocumentRequested;
+    }
+
+    public function isDHLCustomsInvoiceRequested(): bool
+    {
+        return $this->dhlCustomsInvoiceRequested;
     }
 }

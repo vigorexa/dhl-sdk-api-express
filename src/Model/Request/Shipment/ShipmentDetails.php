@@ -231,4 +231,9 @@ class ShipmentDetails implements ShipmentDetailsInterface
     {
         return (string) $this->paperlessDocument;
     }
+
+    public function getExportDeclaration()
+    {
+        return $this->exportDeclaration;
+    }
 }

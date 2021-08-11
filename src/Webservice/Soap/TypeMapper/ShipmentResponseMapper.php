@@ -2,11 +2,13 @@
 /**
  * See LICENSE.md for license details.
  */
+
 namespace Dhl\Express\Webservice\Soap\TypeMapper;
 
 use Dhl\Express\Api\Data\ShipmentResponseInterface;
 use Dhl\Express\Exception\ShipmentRequestException;
 use Dhl\Express\Model\ShipmentResponse;
+use Dhl\Express\Webservice\Soap\Type\ShipmentResponse\Document;
 use Dhl\Express\Webservice\Soap\Type\ShipmentResponse\LabelImage;
 use Dhl\Express\Webservice\Soap\Type\ShipmentResponse\PackagesResults\PackageResult;
 use Dhl\Express\Webservice\Soap\Type\SoapShipmentResponse;
@@ -41,7 +43,7 @@ class ShipmentResponseMapper
             throw new ShipmentRequestException($notification->getMessage(), $notification->getCode());
         }
 
-        $labelData       = '';
+        $labelData = '';
         $trackingNumbers = [];
 
         /** @var LabelImage[] $labelImage */
@@ -49,6 +51,10 @@ class ShipmentResponseMapper
         if ($labelImage) {
             $labelData = $labelImage[0]->getGraphicImage();
         }
+
+        $documents = array_map(function ($document) {
+            return new Document($document->DocumentName, $document->DocumentImage, $document->DocumentFormat);
+        }, $shipmentResponse->getDocuments());
 
         $packageResult = $shipmentResponse->getPackagesResult();
         if ($packageResult) {
@@ -68,7 +74,8 @@ class ShipmentResponseMapper
             $labelData,
             $trackingNumbers,
             $shipmentIdentificationNumber,
-            $dispatchConfirmationNumber
+            $dispatchConfirmationNumber,
+            $documents
         );
     }
 }

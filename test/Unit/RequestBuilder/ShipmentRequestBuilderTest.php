@@ -13,6 +13,8 @@ use Dhl\Express\Model\Request\Recipient;
 use Dhl\Express\Model\Request\Shipment\ShipmentDetails;
 use Dhl\Express\Model\Request\Shipment\Shipper;
 use Dhl\Express\RequestBuilder\ShipmentRequestBuilder;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportDeclaration;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportLineItem;
 
 /**
  * @author   Ronny Gertler <ronny.gertler@netresearch.de>
@@ -27,6 +29,10 @@ class ShipmentRequestBuilderTest extends \PHPUnit\Framework\TestCase
     {
         $readyAtTimestamp = new \DateTime('2019-10-10');
         $requestBuilder = new ShipmentRequestBuilder();
+
+        $exportDeclaration = new ExportDeclaration();
+        $exportDeclaration->addExportLineItem(1, "Customer reference", $unitPrice = 15, $netWeight = 1.123, $grossWeight = 1.123, $quantity = 1, $quantityUOM = ExportLineItem::UOM_QUANTITY_PCS);
+
         $requestBuilder->setIsUnscheduledPickup($unscheduledPickup = true)
             ->setTermsOfTrade($termsOfTrade = ShipmentDetails::PAYMENT_TYPE_CFR)
             ->setContentType($contentType = ShipmentDetails::CONTENT_TYPE_NON_DOCUMENTS)
@@ -35,6 +41,7 @@ class ShipmentRequestBuilderTest extends \PHPUnit\Framework\TestCase
             ->setCurrency($currencyCode = 'EUR')
             ->setDescription($description = 'a description.')
             ->setCustomsValue($customsValue = 1.0)
+            ->setExportDeclaration($exportDeclaration)
             ->setServiceType($serviceType = 'U')
             ->setPayerAccountNumber($accountNumber = 'XXXXXXX')
             ->setInsurance($insuranceValue = 99.99, $insuranceCurrency = 'EUR')
@@ -171,6 +178,8 @@ class ShipmentRequestBuilderTest extends \PHPUnit\Framework\TestCase
             $unCode,
             $weight
         ), $request->getDryIce());
+
+        self::assertInstanceOf(ExportDeclaration::class, $request->getExportDeclaration());
 
         self::assertEquals([
             new Package(

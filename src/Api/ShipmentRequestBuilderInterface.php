@@ -6,6 +6,7 @@
 namespace Dhl\Express\Api;
 
 use Dhl\Express\Api\Data\ShipmentRequestInterface;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportDeclaration;
 
 /**
  * Shipment Request Builder.
@@ -87,6 +88,16 @@ interface ShipmentRequestBuilderInterface
      */
     public function setCustomsValue(float $customsValue): ShipmentRequestBuilderInterface;
 
+
+    /**
+     * Sets Export declaration.
+     *
+     * @param ExportDeclaration $exportDeclaration
+     *
+     * @return ShipmentRequestBuilderInterface
+     */
+    public function setExportDeclaration(ExportDeclaration $exportDeclaration): ShipmentRequestBuilderInterface;
+
     /**
      * Sets the serviceType.
      *
@@ -131,6 +142,14 @@ interface ShipmentRequestBuilderInterface
      * @return ShipmentRequestBuilderInterface
      */
     public function setWaybillDocumentRequested(bool $isRequested): ShipmentRequestBuilderInterface;
+
+    /**
+     * Adds the dhl customs invoice document request flag.
+     *
+     * @param bool $isRequested
+     * @return ShipmentRequestBuilderInterface
+     */
+    public function setDhlCustomsInvoiceRequested(bool $isRequested, string $documentType): ShipmentRequestBuilderInterface;
 
     /**
      * Sets the shipper.

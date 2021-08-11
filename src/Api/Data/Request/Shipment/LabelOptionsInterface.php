@@ -35,4 +35,6 @@ interface LabelOptionsInterface
      * @return bool
      */
     public function isWaybillDocumentRequested(): bool;
+
+    public function isDHLCustomsInvoiceRequested(): bool;
 }

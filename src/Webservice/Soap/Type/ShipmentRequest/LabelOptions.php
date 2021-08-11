@@ -2,8 +2,10 @@
 /**
  * See LICENSE.md for license details.
  */
+
 namespace Dhl\Express\Webservice\Soap\Type\ShipmentRequest;
 
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions\RequestDHLCustomsInvoice;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions\RequestWaybillDocument;
 
 /**
@@ -15,6 +17,9 @@ use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions\RequestWaybill
  */
 class LabelOptions
 {
+    const COMMERCIAL_INVOICE = "COMMERCIAL_INVOICE";
+    const PROFORMA_INVOICE = "PROFORMA_INVOICE";
+
     /**
      * The waybill document request option.
      *
@@ -23,13 +28,31 @@ class LabelOptions
     private $RequestWaybillDocument;
 
     /**
+     * @var int
+     */
+    private $NumberOfWaybillDocumentCopies;
+
+    /**
+     * @var RequestDHLCustomsInvoice
+     */
+    private $RequestDHLCustomsInvoice;
+
+    /**
+     * @var string
+     */
+    private $DHLCustomsInvoiceType;
+
+    private $CustomerLogo;
+
+    /**
      * Constructor.
      *
      * @param RequestWaybillDocument $requestWaybillDocument The waybill document request option.
      */
-    public function __construct(RequestWaybillDocument $requestWaybillDocument)
+    public function __construct(RequestWaybillDocument $requestWaybillDocument, RequestDHLCustomsInvoice $requestDHLCustomsInvoice)
     {
         $this->setRequestWaybillDocument($requestWaybillDocument);
+        $this->setRequestDHLCustomsInvoice($requestDHLCustomsInvoice);
     }
 
     /**
@@ -52,6 +75,23 @@ class LabelOptions
     public function setRequestWaybillDocument(RequestWaybillDocument $requestWaybillDocument): LabelOptions
     {
         $this->RequestWaybillDocument = $requestWaybillDocument;
+        return $this;
+    }
+
+    public function getRequestDHLCustomsInvoice()
+    {
+        return $this->RequestDHLCustomsInvoice;
+    }
+
+    public function getRequestDHLCustomsInvoiceType()
+    {
+        return $this->DHLCustomsInvoiceType;
+    }
+
+    public function setRequestDHLCustomsInvoice(RequestDHLCustomsInvoice $requestDHLCustomsInvoice, $dhlCustomsInvoiceType = self::PROFORMA_INVOICE)
+    {
+        $this->RequestDHLCustomsInvoice = $requestDHLCustomsInvoice;
+        $this->DHLCustomsInvoiceType = $dhlCustomsInvoiceType;
         return $this;
     }
 }

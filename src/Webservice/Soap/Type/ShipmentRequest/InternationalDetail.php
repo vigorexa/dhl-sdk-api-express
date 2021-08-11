@@ -2,10 +2,12 @@
 /**
  * See LICENSE.md for license details.
  */
+
 namespace Dhl\Express\Webservice\Soap\Type\ShipmentRequest;
 
 use Dhl\Express\Webservice\Soap\Type\Common\Content;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\Commodities;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportDeclaration;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportReference;
 
 /**
@@ -23,6 +25,11 @@ class InternationalDetail
     private $Commodities;
 
     /**
+     * @var ExportDeclaration
+     */
+    private $ExportDeclaration;
+
+    /**
      * @var null|Content
      */
     private $Content;
@@ -37,9 +44,12 @@ class InternationalDetail
      *
      * @param Commodities $commodities The commodities
      */
-    public function __construct(Commodities $commodities)
+    public function __construct(Commodities $commodities, ExportDeclaration $exportDeclaration = null)
     {
         $this->setCommodities($commodities);
+        if ($exportDeclaration) {
+            $this->setExportDeclaration($exportDeclaration);
+        }
     }
 
     /**
@@ -63,6 +73,27 @@ class InternationalDetail
     {
         $this->Commodities = $commodities;
         return $this;
+    }
+
+    /**
+     * Sets export declaration.
+     *
+     * @param ExportDeclaration $exportDeclaration
+     *
+     * @return InternationalDetail
+     */
+    public function setExportDeclaration(ExportDeclaration $exportDeclaration)
+    {
+        $this->ExportDeclaration = $exportDeclaration;
+        return $this;
+    }
+
+    /**
+     * @return ExportDeclaration
+     */
+    public function getExportDeclaration()
+    {
+        return $this->ExportDeclaration;
     }
 
     /**

@@ -52,4 +52,9 @@ interface ShipmentResponseInterface
      * @return string
      */
     public function getDispatchConfirmationNumber();
+
+    /**
+     * @return array
+     */
+    public function getDocuments();
 }
