@@ -6,6 +6,8 @@
 namespace Dhl\Express\Model\Request\Shipment;
 
 use Dhl\Express\Api\Data\Request\Shipment\ShipperInterface;
+use Dhl\Express\Webservice\Soap\Type\Common\Ship\RegistrationNumber;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\Ship\RegistrationNumbers;
 
 /**
  * Shipper.
@@ -72,6 +74,11 @@ class Shipper implements ShipperInterface
     private $email;
 
     /**
+     * @var RegistrationNumbers
+     */
+    private $registrationNumbers;
+
+    /**
      * Shipper constructor.
      *
      * @param string $countryCode
@@ -92,7 +99,8 @@ class Shipper implements ShipperInterface
         $company,
         $phone,
         $email = null
-    ) {
+    )
+    {
         $this->countryCode = $countryCode;
         $this->postalCode = $postalCode;
         $this->city = $city;
@@ -105,17 +113,17 @@ class Shipper implements ShipperInterface
 
     public function getCountryCode()
     {
-        return (string) $this->countryCode;
+        return (string)$this->countryCode;
     }
 
     public function getPostalCode()
     {
-        return (string) $this->postalCode;
+        return (string)$this->postalCode;
     }
 
     public function getCity()
     {
-        return (string) $this->city;
+        return (string)$this->city;
     }
 
     public function getStreetLines()
@@ -125,21 +133,38 @@ class Shipper implements ShipperInterface
 
     public function getName()
     {
-        return (string) $this->name;
+        return (string)$this->name;
     }
 
     public function getCompany()
     {
-        return (string) $this->company;
+        return (string)$this->company;
     }
 
     public function getPhone()
     {
-        return (string) $this->phone;
+        return (string)$this->phone;
     }
 
     public function getEmail()
     {
-        return (string) $this->email;
+        return (string)$this->email;
+    }
+
+    public function setRegistrationNumber($number, $numberTypeCode, $countryCode)
+    {
+        $registrationNumber = new RegistrationNumber($number, $numberTypeCode, $countryCode);
+        if (!$this->registrationNumbers) {
+            $this->registrationNumbers = new RegistrationNumbers($registrationNumber);
+        } else {
+            $this->registrationNumbers->setRegistrationNumber(
+                $registrationNumber
+            );
+        }
+    }
+
+    public function getRegistrationNumbers()
+    {
+        return $this->registrationNumbers;
     }
 }

@@ -5,6 +5,8 @@
 
 namespace Dhl\Express\Api\Data\Request\Shipment;
 
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\Ship\RegistrationNumbers;
+
 /**
  * Shipper Interface.
  *
@@ -69,4 +71,9 @@ interface ShipperInterface
      * @return string
      */
     public function getEmail();
+
+    /**
+     * @return RegistrationNumbers
+     */
+    public function getRegistrationNumbers();
 }

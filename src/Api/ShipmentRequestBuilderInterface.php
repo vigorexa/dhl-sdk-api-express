@@ -169,7 +169,7 @@ interface ShipmentRequestBuilderInterface
         string $countryCode,
         string $postalCode,
         string $city,
-        array $streetLines,
+        array  $streetLines,
         string $name,
         string $company,
         string $phone,
@@ -194,7 +194,7 @@ interface ShipmentRequestBuilderInterface
         string $countryCode,
         string $postalCode,
         string $city,
-        array $streetLines,
+        array  $streetLines,
         string $name,
         string $company,
         string $phone,
@@ -216,12 +216,12 @@ interface ShipmentRequestBuilderInterface
      * @return ShipmentRequestBuilderInterface
      */
     public function addPackage(
-        int $sequenceNumber,
-        float $weight,
+        int    $sequenceNumber,
+        float  $weight,
         string $weightUOM,
-        float $length,
-        float $width,
-        float $height,
+        float  $length,
+        float  $width,
+        float  $height,
         string $dimensionsUOM,
         string $customerReferences
     ): ShipmentRequestBuilderInterface;
@@ -242,4 +242,20 @@ interface ShipmentRequestBuilderInterface
      * @return ShipmentRequestInterface
      */
     public function build(): ShipmentRequestInterface;
+
+    /**
+     * @param string $registrationNumber
+     * @param string $registrationTypeCode
+     * @return ShipmentRequestBuilderInterface
+     */
+    public function setShipperRegistrationNumber(string $registrationNumber, string $registrationTypeCode): ShipmentRequestBuilderInterface;
+
+    /**
+     * @param string $registrationNumber
+     * @param string $registrationTypeCode
+     * @return ShipmentRequestBuilderInterface
+     */
+    public function setRecipientRegistrationNumber(string $registrationNumber, string $registrationTypeCode): ShipmentRequestBuilderInterface;
+
+
 }

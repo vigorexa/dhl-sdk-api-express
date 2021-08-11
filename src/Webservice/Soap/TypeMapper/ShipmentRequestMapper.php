@@ -83,7 +83,8 @@ class ShipmentRequestMapper
                     $request->getShipper()->getCity(),
                     $request->getShipper()->getPostalCode(),
                     $request->getShipper()->getCountryCode()
-                )
+                ),
+                $request->getShipper()->getRegistrationNumbers()
             ),
             new Ship\ContactInfo(
                 new Ship\Contact(
@@ -96,7 +97,8 @@ class ShipmentRequestMapper
                     $request->getRecipient()->getCity(),
                     $request->getRecipient()->getPostalCode(),
                     $request->getRecipient()->getCountryCode()
-                )
+                ),
+                $request->getRecipient()->getRegistrationNumbers()
             )
         );
 
