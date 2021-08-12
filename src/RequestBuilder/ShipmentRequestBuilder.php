@@ -505,7 +505,7 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         if (!empty($this->data['labelOptions']) && isset($this->data['labelOptions']['waybillDocument'])) {
             $labelOptions = new LabelOptions(
                 $this->data['labelOptions']['waybillDocument'],
-                $this->data['labelOptions']['dhlCustomsInvoice']
+                $this->data['labelOptions']['dhlCustomsInvoice'] ?? false
             );
 
             $request->setLabelOptions($labelOptions);
