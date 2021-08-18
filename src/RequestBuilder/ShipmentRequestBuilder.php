@@ -245,8 +245,8 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
 
     public function setDhlCustomsInvoiceRequested(
         bool    $isRequested,
-        ?string $documentType,
-        ?string $documentLanguageCode
+        ?string $documentType = null,
+        ?string $documentLanguageCode = null
     ): ShipmentRequestBuilderInterface
     {
         $this->data['labelOptions']['dhlCustomsInvoice'] = $isRequested;
