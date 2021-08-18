@@ -147,9 +147,17 @@ interface ShipmentRequestBuilderInterface
      * Adds the dhl customs invoice document request flag.
      *
      * @param bool $isRequested
+     * @param string $documentType
+     * @param string $documentLanguageCode
      * @return ShipmentRequestBuilderInterface
      */
-    public function setDhlCustomsInvoiceRequested(bool $isRequested, string $documentType): ShipmentRequestBuilderInterface;
+    public function setDhlCustomsInvoiceRequested(bool $isRequested, string $documentType, string $documentLanguageCode): ShipmentRequestBuilderInterface;
+
+    /**
+     * @param bool $isRequested
+     * @return mixed
+     */
+    public function setShipmentReceiptRequested(bool $isRequested): ShipmentRequestBuilderInterface;
 
     /**
      * Sets the shipper.
@@ -257,5 +265,6 @@ interface ShipmentRequestBuilderInterface
      */
     public function setRecipientRegistrationNumber(string $registrationNumber, string $registrationTypeCode): ShipmentRequestBuilderInterface;
 
+    public function setCustomerLogo(string $image, string $format): ShipmentRequestBuilderInterface;
 
 }

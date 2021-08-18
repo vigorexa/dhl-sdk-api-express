@@ -139,8 +139,7 @@ class ShipmentInfo
     private $LabelTemplate;
 
     /**
-     * The LabelOptions node conveys additional label options. It is an optional field. Currently only
-     * RequestWaybillDocument is supported and it takes a value of Y/N
+     * The LabelOptions node conveys additional label options. It is an optional field.
      *
      * @var null|LabelOptions
      */

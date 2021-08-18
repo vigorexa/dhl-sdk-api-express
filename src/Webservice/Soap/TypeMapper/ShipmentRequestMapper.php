@@ -201,15 +201,32 @@ class ShipmentRequestMapper
         }
 
         // Add waybill document option
-        $labelOptions = $request->getLabelOptions();
-        if ($labelOptions instanceof LabelOptionsInterface) {
-            $requestedShipment->getShipmentInfo()->setLabelOptions(
-                new LabelOptions(
-                    new LabelOptions\RequestWaybillDocument($labelOptions->isWaybillDocumentRequested()),
-                    new LabelOptions\RequestDHLCustomsInvoice($labelOptions->isWaybillDocumentRequested()),
-                    new LabelOptions\DhlCustomsInvoiceType($labelOptions->getDHLCustomsInvoiceType())
-                )
+        $labelOptionsData = $request->getLabelOptions();
+        if ($labelOptionsData instanceof LabelOptionsInterface) {
+
+            $labelOptions = new LabelOptions();
+            $labelOptions->setRequestWaybillDocument(
+                new LabelOptions\RequestWaybillDocument($labelOptionsData->isWaybillDocumentRequested())
             );
+
+            if ($labelOptionsData->isDHLCustomsInvoiceRequested()) {
+                $labelOptions->setRequestDHLCustomsInvoice(
+                    new LabelOptions\RequestDHLCustomsInvoice($labelOptionsData->isDHLCustomsInvoiceRequested()),
+                    new LabelOptions\DhlCustomsInvoiceType($labelOptionsData->getDHLCustomsInvoiceType()),
+                    new LabelOptions\DHLCustomsInvoiceLanguageCode($labelOptionsData->getDHLCustomsInvoiceLanguageCode())
+                );
+            }
+
+            $labelOptions->setRequestBarcodeInfo(new LabelOptions\RequestBarcodeInfo($labelOptionsData->isBarcodeInfoRequested()));
+            $labelOptions->setRequestDHLLogoOnLabel(new LabelOptions\RequestDHLLogoOnLabel($labelOptionsData->isDHLLogoOnLabelRequested()));
+            $labelOptions->setDhlCustomsInvoiceLanguageCode(new LabelOptions\DHLCustomsInvoiceLanguageCode($labelOptionsData->getDhlCustomsInvoiceLanguageCode()));
+            $labelOptions->setRequestShipmentReceipt(new LabelOptions\RequestShipmentReceipt($labelOptionsData->isShipmentReceiptRequested()));
+
+            if (!empty($labelOptionsData->getCustomerLogo())) {
+                $labelOptions->setCustomerLogo(new LabelOptions\CustomerLogo($labelOptionsData->getCustomerLogo(), $labelOptionsData->getCustomerLogoFormat()));
+            }
+
+            $requestedShipment->getShipmentInfo()->setLabelOptions($labelOptions);
         }
 
         return new SoapShipmentRequest($requestedShipment);
