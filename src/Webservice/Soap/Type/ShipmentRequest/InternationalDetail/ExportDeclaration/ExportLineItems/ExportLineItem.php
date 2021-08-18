@@ -88,27 +88,29 @@ class ExportLineItem
     private $TaxesPaid;
 
     public function __construct(
-        string $number,
-        string $description,
-        float $unitPrice,
-        float $netWeight,
-        float $grossWeight,
-        int $quantity,
-        string $quantityUOM = self::UOM_QUANTITY_PCS
-    ) {
-        $this->ItemNumber = $number;
-        $this->ItemDescription = $description;
-        $this->UnitPrice = $unitPrice;
-        $this->NetWeight = $netWeight;
-        $this->GrossWeight = $grossWeight;
-        $this->Quantity = $quantity;
-        $this->QuantityUnitOfMeasurement = $quantityUOM;
+        string  $number,
+        string  $description,
+        float   $unitPrice,
+        float   $netWeight,
+        float   $grossWeight,
+        int     $quantity,
+        string  $quantityUOM = self::UOM_QUANTITY_PCS
+    )
+    {
+        $this->setItemNumber($number);
+        $this->setItemDescription($description);
+        $this->setUnitPrice($unitPrice);
+        $this->setNetWeight($netWeight);
+        $this->setGrossWeight($grossWeight);
+        $this->setQuantity($quantity);
+        $this->setQuantityUnitOfMeasurement($quantityUOM);
     }
 
     /**
      * @return string
      */
-    public function getCommodityCode(): string {
+    public function getCommodityCode(): string
+    {
         return $this->CommodityCode;
     }
 
@@ -116,7 +118,8 @@ class ExportLineItem
      * @param string $CommodityCode
      * @return ExportLineItem
      */
-    public function setCommodityCode(string $CommodityCode): ExportLineItem {
+    public function setCommodityCode(string $CommodityCode): ExportLineItem
+    {
         $this->CommodityCode = $CommodityCode;
         return $this;
     }
@@ -124,7 +127,8 @@ class ExportLineItem
     /**
      * @return string
      */
-    public function getECCN(): string {
+    public function getECCN(): string
+    {
         return $this->ECCN;
     }
 
@@ -132,7 +136,8 @@ class ExportLineItem
      * @param string $ECCN
      * @return ExportLineItem
      */
-    public function setECCN(string $ECCN): ExportLineItem {
+    public function setECCN(string $ECCN): ExportLineItem
+    {
         $this->ECCN = $ECCN;
         return $this;
     }
@@ -140,7 +145,8 @@ class ExportLineItem
     /**
      * @return string
      */
-    public function getExportReasonType(): string {
+    public function getExportReasonType(): string
+    {
         return $this->ExportReasonType;
     }
 
@@ -148,7 +154,8 @@ class ExportLineItem
      * @param string $ExportReasonType
      * @return ExportLineItem
      */
-    public function setExportReasonType(string $ExportReasonType): ExportLineItem {
+    public function setExportReasonType(string $ExportReasonType): ExportLineItem
+    {
         $this->ExportReasonType = $ExportReasonType;
         return $this;
     }
@@ -156,7 +163,8 @@ class ExportLineItem
     /**
      * @return int
      */
-    public function getQuantity(): int {
+    public function getQuantity(): int
+    {
         return $this->Quantity;
     }
 
@@ -164,7 +172,8 @@ class ExportLineItem
      * @param int $Quantity
      * @return ExportLineItem
      */
-    public function setQuantity(int $Quantity): ExportLineItem {
+    public function setQuantity(int $Quantity): ExportLineItem
+    {
         $this->Quantity = $Quantity;
         return $this;
     }
@@ -172,7 +181,8 @@ class ExportLineItem
     /**
      * @return string
      */
-    public function getQuantityUnitOfMeasurement(): string {
+    public function getQuantityUnitOfMeasurement(): string
+    {
         return $this->QuantityUnitOfMeasurement;
     }
 
@@ -180,7 +190,8 @@ class ExportLineItem
      * @param string $QuantityUnitOfMeasurement
      * @return ExportLineItem
      */
-    public function setQuantityUnitOfMeasurement(string $QuantityUnitOfMeasurement): ExportLineItem {
+    public function setQuantityUnitOfMeasurement(string $QuantityUnitOfMeasurement): ExportLineItem
+    {
         $this->QuantityUnitOfMeasurement = $QuantityUnitOfMeasurement;
         return $this;
     }
@@ -188,7 +199,8 @@ class ExportLineItem
     /**
      * @return string
      */
-    public function getItemNumber(): string {
+    public function getItemNumber(): string
+    {
         return $this->ItemNumber;
     }
 
@@ -196,7 +208,8 @@ class ExportLineItem
      * @param string $ItemNumber
      * @return ExportLineItem
      */
-    public function setItemNumber(string $ItemNumber): ExportLineItem {
+    public function setItemNumber(string $ItemNumber): ExportLineItem
+    {
         $this->ItemNumber = $ItemNumber;
         return $this;
     }
@@ -204,7 +217,8 @@ class ExportLineItem
     /**
      * @return string
      */
-    public function getItemDescription(): string {
+    public function getItemDescription(): string
+    {
         return $this->ItemDescription;
     }
 
@@ -212,7 +226,8 @@ class ExportLineItem
      * @param string $ItemDescription
      * @return ExportLineItem
      */
-    public function setItemDescription(string $ItemDescription): ExportLineItem {
+    public function setItemDescription(string $ItemDescription): ExportLineItem
+    {
         $this->ItemDescription = $ItemDescription;
         return $this;
     }
@@ -220,7 +235,8 @@ class ExportLineItem
     /**
      * @return float
      */
-    public function getUnitPrice(): float {
+    public function getUnitPrice(): float
+    {
         return $this->UnitPrice;
     }
 
@@ -228,7 +244,8 @@ class ExportLineItem
      * @param float $UnitPrice
      * @return ExportLineItem
      */
-    public function setUnitPrice(float $UnitPrice): ExportLineItem {
+    public function setUnitPrice(float $UnitPrice): ExportLineItem
+    {
         $this->UnitPrice = $UnitPrice;
         return $this;
     }
@@ -236,7 +253,8 @@ class ExportLineItem
     /**
      * @return float
      */
-    public function getNetWeight(): float {
+    public function getNetWeight(): float
+    {
         return $this->NetWeight;
     }
 
@@ -244,7 +262,8 @@ class ExportLineItem
      * @param float $NetWeight
      * @return ExportLineItem
      */
-    public function setNetWeight(float $NetWeight): ExportLineItem {
+    public function setNetWeight(float $NetWeight): ExportLineItem
+    {
         $this->NetWeight = $NetWeight;
         return $this;
     }
@@ -252,7 +271,8 @@ class ExportLineItem
     /**
      * @return float
      */
-    public function getGrossWeight(): float {
+    public function getGrossWeight(): float
+    {
         return $this->GrossWeight;
     }
 
@@ -260,7 +280,8 @@ class ExportLineItem
      * @param float $GrossWeight
      * @return ExportLineItem
      */
-    public function setGrossWeight(float $GrossWeight): ExportLineItem {
+    public function setGrossWeight(float $GrossWeight): ExportLineItem
+    {
         $this->GrossWeight = $GrossWeight;
         return $this;
     }
@@ -268,7 +289,8 @@ class ExportLineItem
     /**
      * @return string
      */
-    public function getManufacturingCountryCode(): string {
+    public function getManufacturingCountryCode(): string
+    {
         return $this->ManufacturingCountryCode;
     }
 
@@ -276,7 +298,8 @@ class ExportLineItem
      * @param string $ManufacturingCountryCode
      * @return ExportLineItem
      */
-    public function setManufacturingCountryCode(string $ManufacturingCountryCode): ExportLineItem {
+    public function setManufacturingCountryCode(string $ManufacturingCountryCode): ExportLineItem
+    {
         $this->ManufacturingCountryCode = $ManufacturingCountryCode;
         return $this;
     }
@@ -284,14 +307,16 @@ class ExportLineItem
     /**
      * @param bool $TaxesPaid
      */
-    public function setTaxesPaid(bool $TaxesPaid = true) {
+    public function setTaxesPaid(bool $TaxesPaid = true)
+    {
         $this->TaxesPaid = new RequestTaxesPaid($TaxesPaid);
     }
 
     /**
      * @return RequestTaxesPaid
      */
-    public function getTaxesPaid() {
+    public function getTaxesPaid()
+    {
         return $this->TaxesPaid;
     }
 
