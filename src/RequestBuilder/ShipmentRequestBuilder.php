@@ -17,6 +17,7 @@ use Dhl\Express\Model\Request\Shipment\Shipper;
 use Dhl\Express\Model\ShipmentRequest;
 use Dhl\Express\Webservice\Soap\Type\Common\SpecialServices;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportDeclaration;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions\DhlCustomsInvoiceType;
 
 /**
  * Shipment Request Builder.
@@ -243,7 +244,7 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         return $this;
     }
 
-    public function setDhlCustomsInvoiceRequested(bool $isRequested, string $documentType): ShipmentRequestBuilderInterface
+    public function setDhlCustomsInvoiceRequested(bool $isRequested, string $documentType = DhlCustomsInvoiceType::COMMERCIAL_INVOICE): ShipmentRequestBuilderInterface
     {
         $this->data['labelOptions']['dhlCustomsInvoice'] = $isRequested;
         $this->data['labelOptions']['dHLCustomsInvoiceType'] = $documentType;

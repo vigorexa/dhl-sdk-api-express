@@ -206,7 +206,8 @@ class ShipmentRequestMapper
             $requestedShipment->getShipmentInfo()->setLabelOptions(
                 new LabelOptions(
                     new LabelOptions\RequestWaybillDocument($labelOptions->isWaybillDocumentRequested()),
-                    new LabelOptions\RequestDHLCustomsInvoice($labelOptions->isWaybillDocumentRequested())
+                    new LabelOptions\RequestDHLCustomsInvoice($labelOptions->isWaybillDocumentRequested()),
+                    new LabelOptions\DhlCustomsInvoiceType($labelOptions->getDHLCustomsInvoiceType())
                 )
             );
         }
@@ -295,7 +296,7 @@ class ShipmentRequestMapper
     /**
      * Maps the magento unit of measurement to the DHL express unit of measurement.
      *
-     * @param string $weightUOM     The unit of measurement for weight
+     * @param string $weightUOM The unit of measurement for weight
      * @param string $dimensionsUOM The unit of measurement for dimensions
      *
      * @return string
