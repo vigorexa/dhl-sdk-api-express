@@ -5,6 +5,7 @@
 
 namespace Dhl\Express\Webservice\Soap\Type\ShipmentRequest;
 
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions\DhlCustomsInvoiceType;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions\RequestDHLCustomsInvoice;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions\RequestWaybillDocument;
 
@@ -38,7 +39,7 @@ class LabelOptions
     private $RequestDHLCustomsInvoice;
 
     /**
-     * @var string
+     * @var DhlCustomsInvoiceType
      */
     private $DHLCustomsInvoiceType;
 
@@ -49,10 +50,10 @@ class LabelOptions
      *
      * @param RequestWaybillDocument $requestWaybillDocument The waybill document request option.
      */
-    public function __construct(RequestWaybillDocument $requestWaybillDocument, RequestDHLCustomsInvoice $requestDHLCustomsInvoice)
+    public function __construct(RequestWaybillDocument $requestWaybillDocument, RequestDHLCustomsInvoice $requestDHLCustomsInvoice, DhlCustomsInvoiceType $requestDHLCustomsInvoiceType)
     {
         $this->setRequestWaybillDocument($requestWaybillDocument);
-        $this->setRequestDHLCustomsInvoice($requestDHLCustomsInvoice);
+        $this->setRequestDHLCustomsInvoice($requestDHLCustomsInvoice, $requestDHLCustomsInvoiceType);
     }
 
     /**
@@ -88,7 +89,7 @@ class LabelOptions
         return $this->DHLCustomsInvoiceType;
     }
 
-    public function setRequestDHLCustomsInvoice(RequestDHLCustomsInvoice $requestDHLCustomsInvoice, $dhlCustomsInvoiceType = self::PROFORMA_INVOICE)
+    public function setRequestDHLCustomsInvoice(RequestDHLCustomsInvoice $requestDHLCustomsInvoice, DhlCustomsInvoiceType $dhlCustomsInvoiceType)
     {
         $this->RequestDHLCustomsInvoice = $requestDHLCustomsInvoice;
         $this->DHLCustomsInvoiceType = $dhlCustomsInvoiceType;

@@ -37,4 +37,6 @@ interface LabelOptionsInterface
     public function isWaybillDocumentRequested(): bool;
 
     public function isDHLCustomsInvoiceRequested(): bool;
+
+    public function getDHLCustomsInvoiceType(): string;
 }
