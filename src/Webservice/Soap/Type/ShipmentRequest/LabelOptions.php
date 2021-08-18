@@ -5,8 +5,13 @@
 
 namespace Dhl\Express\Webservice\Soap\Type\ShipmentRequest;
 
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions\CustomerLogo;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions\DHLCustomsInvoiceLanguageCode;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions\DhlCustomsInvoiceType;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions\RequestBarcodeInfo;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions\RequestDHLCustomsInvoice;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions\RequestDHLLogoOnLabel;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions\RequestShipmentReceipt;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions\RequestWaybillDocument;
 
 /**
@@ -43,18 +48,30 @@ class LabelOptions
      */
     private $DHLCustomsInvoiceType;
 
+    /**
+     * @var CustomerLogo
+     */
     private $CustomerLogo;
 
     /**
-     * Constructor.
-     *
-     * @param RequestWaybillDocument $requestWaybillDocument The waybill document request option.
+     * @var RequestBarcodeInfo
      */
-    public function __construct(RequestWaybillDocument $requestWaybillDocument, RequestDHLCustomsInvoice $requestDHLCustomsInvoice, DhlCustomsInvoiceType $requestDHLCustomsInvoiceType)
-    {
-        $this->setRequestWaybillDocument($requestWaybillDocument);
-        $this->setRequestDHLCustomsInvoice($requestDHLCustomsInvoice, $requestDHLCustomsInvoiceType);
-    }
+    private $RequestBarcodeInfo;
+
+    /**
+     * @var RequestDHLLogoOnLabel
+     */
+    private $RequestDHLLogoOnLabel;
+
+    /**
+     * @var DHLCustomsInvoiceLanguageCode
+     */
+    private $DHLCustomsInvoiceLanguageCode;
+
+    /**
+     * @var RequestShipmentReceipt
+     */
+    private $RequestShipmentReceipt;
 
     /**
      * Returns the request waybill document option.
@@ -79,20 +96,69 @@ class LabelOptions
         return $this;
     }
 
-    public function getRequestDHLCustomsInvoice()
+    public function getRequestDHLCustomsInvoice(): RequestDHLCustomsInvoice
     {
         return $this->RequestDHLCustomsInvoice;
     }
 
-    public function getRequestDHLCustomsInvoiceType()
+    public function getRequestDHLCustomsInvoiceType(): DhlCustomsInvoiceType
     {
         return $this->DHLCustomsInvoiceType;
     }
 
-    public function setRequestDHLCustomsInvoice(RequestDHLCustomsInvoice $requestDHLCustomsInvoice, DhlCustomsInvoiceType $dhlCustomsInvoiceType)
+    public function setRequestDHLCustomsInvoice(
+        RequestDHLCustomsInvoice      $requestDHLCustomsInvoice,
+        DhlCustomsInvoiceType         $dhlCustomsInvoiceType,
+        DHLCustomsInvoiceLanguageCode $dhlCustomsInvoiceLanguageCode): LabelOptions
     {
         $this->RequestDHLCustomsInvoice = $requestDHLCustomsInvoice;
         $this->DHLCustomsInvoiceType = $dhlCustomsInvoiceType;
+        $this->DHLCustomsInvoiceLanguageCode = $dhlCustomsInvoiceLanguageCode;
         return $this;
+    }
+
+    public function setRequestBarcodeInfo(RequestBarcodeInfo $RequestBarcodeInfo)
+    {
+        $this->RequestBarcodeInfo = $RequestBarcodeInfo;
+    }
+
+    public function setRequestDHLLogoOnLabel(RequestDHLLogoOnLabel $requestDHLLogoOnLabel)
+    {
+        $this->RequestDHLLogoOnLabel = $requestDHLLogoOnLabel;
+    }
+
+    public function setDHLCustomsInvoiceLanguageCode(DHLCustomsInvoiceLanguageCode $customsInvoiceLanguageCode)
+    {
+        $this->DHLCustomsInvoiceLanguageCode = $customsInvoiceLanguageCode;
+    }
+
+    public function getRequestBarcodeInfo(): RequestBarcodeInfo
+    {
+        return $this->RequestBarcodeInfo;
+    }
+
+    public function getRequestDHLLogoOnLabel(): RequestDHLLogoOnLabel
+    {
+        return $this->RequestDHLLogoOnLabel;
+    }
+
+    public function setRequestShipmentReceipt(RequestShipmentReceipt $requestShipmentReceipt): LabelOptions
+    {
+        $this->RequestShipmentReceipt = $requestShipmentReceipt;
+        return $this;
+    }
+
+    public function setCustomerLogo(CustomerLogo $customerLogo): LabelOptions
+    {
+        $this->CustomerLogo = $customerLogo;
+        return $this;
+    }
+
+    /**
+     * @return CustomerLogo
+     */
+    public function getCustomerLogo(): CustomerLogo
+    {
+        return $this->CustomerLogo;
     }
 }

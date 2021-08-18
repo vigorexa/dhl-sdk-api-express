@@ -38,5 +38,13 @@ interface LabelOptionsInterface
 
     public function isDHLCustomsInvoiceRequested(): bool;
 
-    public function getDHLCustomsInvoiceType(): string;
+    public function getDHLCustomsInvoiceType(): ?string;
+
+    public function isBarCodeInfoRequested(): bool;
+
+    public function isDHLLogoOnLabelRequested(): bool;
+
+    public function getCustomerLogo();
+
+    public function getCustomerLogoFormat();
 }

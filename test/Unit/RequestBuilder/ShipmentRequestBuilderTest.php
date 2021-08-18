@@ -14,7 +14,7 @@ use Dhl\Express\Model\Request\Shipment\ShipmentDetails;
 use Dhl\Express\Model\Request\Shipment\Shipper;
 use Dhl\Express\RequestBuilder\ShipmentRequestBuilder;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportDeclaration;
-use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportLineItem;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportLineItems\ExportLineItem;
 
 /**
  * @author   Ronny Gertler <ronny.gertler@netresearch.de>

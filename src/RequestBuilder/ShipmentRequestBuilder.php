@@ -17,7 +17,6 @@ use Dhl\Express\Model\Request\Shipment\Shipper;
 use Dhl\Express\Model\ShipmentRequest;
 use Dhl\Express\Webservice\Soap\Type\Common\SpecialServices;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportDeclaration;
-use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions\DhlCustomsInvoiceType;
 
 /**
  * Shipment Request Builder.
@@ -244,11 +243,26 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         return $this;
     }
 
-    public function setDhlCustomsInvoiceRequested(bool $isRequested, string $documentType = DhlCustomsInvoiceType::COMMERCIAL_INVOICE): ShipmentRequestBuilderInterface
+    public function setDhlCustomsInvoiceRequested(
+        bool    $isRequested,
+        ?string $documentType,
+        ?string $documentLanguageCode
+    ): ShipmentRequestBuilderInterface
     {
         $this->data['labelOptions']['dhlCustomsInvoice'] = $isRequested;
-        $this->data['labelOptions']['dHLCustomsInvoiceType'] = $documentType;
+        if ($documentType) {
+            $this->data['labelOptions']['dhlCustomsInvoiceType'] = $documentType;
+        }
+        if ($documentLanguageCode) {
+            $this->data['labelOptions']['dhlCustomsInvoiceLanguageCode'] = $documentLanguageCode;
+        }
 
+        return $this;
+    }
+
+    public function setShipmentReceiptRequested(bool $isRequested): ShipmentRequestBuilderInterface
+    {
+        $this->data['labelOptions']['shipmentReceipt'] = $isRequested;
         return $this;
     }
 
@@ -503,11 +517,37 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         }
 
         // build label options
-        if (!empty($this->data['labelOptions']) && isset($this->data['labelOptions']['waybillDocument'])) {
-            $labelOptions = new LabelOptions(
-                $this->data['labelOptions']['waybillDocument'],
-                $this->data['labelOptions']['dhlCustomsInvoice'] ?? false
-            );
+        if (!empty($this->data['labelOptions'])) {
+            $labelOptions = new LabelOptions();
+
+            if (isset($this->data['labelOptions']['waybillDocument'])) {
+                $labelOptions->setWaybillDocumentRequested($this->data['labelOptions']['waybillDocument']);
+                if (isset($this->data['labelOptions']['dhlCustomsInvoice'])) {
+                    $labelOptions->setDHLCustomsInvoiceRequested(boolval($this->data['labelOptions']['dhlCustomsInvoice']));
+                    if (isset($this->data['labelOptions']['dhlCustomsInvoiceType'])) {
+                        $labelOptions->setDHLCustomsInvoiceType($this->data['labelOptions']['dhlCustomsInvoiceType']);
+                    }
+                    if (isset($this->data['labelOptions']['dhlCustomsInvoiceLanguageCode'])) {
+                        $labelOptions->setDHLCustomsInvoiceLanguageCode($this->data['labelOptions']['dhlCustomsInvoiceLanguageCode']);
+                    }
+                }
+
+                if (isset($this->data['labelOptions']['barcodeInfo'])) {
+                    $labelOptions->setBarcodeInfoRequest($this->data['labelOptions']['barcodeInfo']);
+                }
+            }
+
+            if (isset($this->data['labelOptions']['shipmentReceipt'])) {
+                $labelOptions->setShipmentReceiptRequested($this->data['labelOptions']['shipmentReceipt']);
+            }
+
+            if (isset($this->data['labelOptions']['dhlLogoOnLabel'])) {
+                $labelOptions->setDHLLogoOnLabelRequested($this->data['labelOptions']['dhlLogoOnLabel']);
+            }
+
+            if (isset($this->data['labelOptions']['customerLogo'])) {
+                $labelOptions->setCustomerLogo($this->data['labelOptions']['customerLogo'], $this->data['labelOptions']['customerLogoFormat']);
+            }
 
             $request->setLabelOptions($labelOptions);
         }
@@ -521,6 +561,13 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
     {
         $this->data['exportDeclaration'] = $exportDeclaration;
 
+        return $this;
+    }
+
+    public function setCustomerLogo(string $image, string $format): ShipmentRequestBuilderInterface
+    {
+        $this->data['labelOptions']['customerLogo'] = $image;
+        $this->data['labelOptions']['customerLogoFormat'] = $format;
         return $this;
     }
 }
