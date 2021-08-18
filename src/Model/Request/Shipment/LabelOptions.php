@@ -39,11 +39,6 @@ class LabelOptions implements LabelOptionsInterface
     /**
      * @var bool
      */
-    private $qrCodeRequested = false;
-
-    /**
-     * @var bool
-     */
     private $dhlLogoOnLabelRequested = true;
 
     /**
@@ -76,7 +71,7 @@ class LabelOptions implements LabelOptionsInterface
 
     public function isWaybillDocumentRequested(): bool
     {
-        return $this->waybillDocumentRequested;
+        return boolval($this->waybillDocumentRequested);
     }
 
     public function setWaybillDocumentRequested(bool $value): LabelOptions
@@ -87,7 +82,7 @@ class LabelOptions implements LabelOptionsInterface
 
     public function isDHLCustomsInvoiceRequested(): bool
     {
-        return $this->dhlCustomsInvoiceRequested;
+        return boolval($this->dhlCustomsInvoiceRequested);
     }
 
     public function setDHLCustomsInvoiceRequested(bool $value): LabelOptions
