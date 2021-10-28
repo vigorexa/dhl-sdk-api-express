@@ -9,10 +9,12 @@ use Dhl\Express\Api\Data\Request\InsuranceInterface;
 use Dhl\Express\Api\Data\Request\PackageInterface;
 use Dhl\Express\Api\Data\Request\RecipientInterface;
 use Dhl\Express\Api\Data\Request\ServiceInterface;
+use Dhl\Express\Api\Data\Request\Shipment\BuyerInterface;
 use Dhl\Express\Api\Data\Request\Shipment\DangerousGoods\DryIceInterface;
 use Dhl\Express\Api\Data\Request\Shipment\LabelOptionsInterface;
 use Dhl\Express\Api\Data\Request\Shipment\ShipmentDetailsInterface;
 use Dhl\Express\Api\Data\Request\Shipment\ShipperInterface;
+use Dhl\Express\Model\Request\Shipment\Buyer;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportDeclaration;
 
 /**
@@ -51,6 +53,11 @@ interface ShipmentRequestInterface
      * @return ShipperInterface
      */
     public function getShipper(): ShipperInterface;
+
+    /**
+     * @return ?BuyerInterface
+     */
+    public function getBuyer(): ?BuyerInterface;
 
     /**
      * @return RecipientInterface

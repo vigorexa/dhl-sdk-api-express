@@ -80,6 +80,7 @@ class ShipmentServiceAdapter implements ShipmentServiceAdapterInterface, Traceab
             throw new ShipmentRequestException($e->getMessage());
         }
 
+
         try {
             $soapResponse = $this->client->__soapCall('createShipmentRequest', [ $soapRequest ]);
 

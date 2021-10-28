@@ -210,6 +210,31 @@ interface ShipmentRequestBuilderInterface
     ): ShipmentRequestBuilderInterface;
 
     /**
+     * Sets the buyer.
+     *
+     * @param string $countryCode
+     * @param string $postalCode
+     * @param string $city
+     * @param string[] $streetLines
+     * @param string $name
+     * @param string $company
+     * @param string $phone
+     * @param string|null $email
+     *
+     * @return ShipmentRequestBuilderInterface
+     */
+    public function setBuyer(
+        string $countryCode,
+        string $postalCode,
+        string $city,
+        array  $streetLines,
+        string $name,
+        string $company,
+        string $phone,
+        string $email = null
+    ): ShipmentRequestBuilderInterface;
+
+    /**
      * Adds a package to the list of packages.
      *
      * @param int $sequenceNumber

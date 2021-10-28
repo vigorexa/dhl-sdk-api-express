@@ -21,14 +21,14 @@ class ContactInfo
      *
      * @var Contact
      */
-    private $Contact;
+    protected $Contact;
 
     /**
      * The address.
      *
      * @var ShipmentAddress
      */
-    private $Address;
+    protected $Address;
 
     /**
      * @var RegistrationNumbers

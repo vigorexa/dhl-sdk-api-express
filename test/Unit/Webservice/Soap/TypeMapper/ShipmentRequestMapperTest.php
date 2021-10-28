@@ -8,6 +8,7 @@ namespace Dhl\Express\Webservice\Soap\TypeMapper;
 use Dhl\Express\Model\Request\Insurance;
 use Dhl\Express\Model\Request\Package;
 use Dhl\Express\Model\Request\Recipient;
+use Dhl\Express\Model\Request\Shipment\Buyer;
 use Dhl\Express\Model\Request\Shipment\DangerousGoods\DryIce;
 use Dhl\Express\Model\Request\Shipment\ShipmentDetails;
 use Dhl\Express\Model\Request\Shipment\Shipper;
@@ -16,6 +17,7 @@ use Dhl\Express\Webservice\Soap\Type\Common\DropOffType;
 use Dhl\Express\Webservice\Soap\Type\Common\SpecialServices;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportDeclaration;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportLineItem;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportLineItems;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\Packages\RequestedPackages;
 use Dhl\Express\Webservice\Soap\Type\SoapShipmentRequest;
 use PHPUnit\Framework\TestCase;
@@ -78,6 +80,20 @@ class ShipmentRequestMapperTest extends TestCase
             '004922832432423'
         );
 
+        $buyer = new Buyer(
+            'DE',
+            '12345',
+            'Berlin',
+            [
+                'Sample street 5a',
+                'Sample street 5b',
+                'Sample street 5c'
+            ],
+            'Max Mustermann',
+            'Acme',
+            '004922832432423'
+        );
+
         $package = new Package(
             1,
             1.123,
@@ -90,7 +106,7 @@ class ShipmentRequestMapperTest extends TestCase
         );
 
         $exportDeclaration = new ExportDeclaration([
-            new ExportLineItem(1, "Test 123", 10, 5, 5, 1, ExportLineItem::UOM_QUANTITY_PCS),
+            new ExportLineItems\ExportLineItem(1, "Test 123", 10, 5, 5, 1, ExportLineItems\ExportLineItem::UOM_QUANTITY_PCS),
         ]);
 
         $packages = [$package, $package];
@@ -105,7 +121,8 @@ class ShipmentRequestMapperTest extends TestCase
             $payerAccountNumber,
             $shipper,
             $recipient,
-            $packages
+            $packages,
+            $buyer
         );
 
         $request->setBillingAccountNumber('123456789');
@@ -271,6 +288,31 @@ class ShipmentRequestMapperTest extends TestCase
                 $soapRequest->getRequestedShipment()->getShip()->getRecipient()->getAddress()->getStreetLines()
             );
         }
+
+        self::assertEquals(
+            $buyer->getName(),
+            $soapRequest->getRequestedShipment()->getShip()->getBuyer()->getContact()->getPersonName()
+        );
+
+        self::assertEquals(
+            $buyer->getCompany(),
+            $soapRequest->getRequestedShipment()->getShip()->getBuyer()->getContact()->getCompanyName()
+        );
+
+        self::assertEquals(
+            $buyer->getPhone(),
+            $soapRequest->getRequestedShipment()->getShip()->getBuyer()->getContact()->getPhoneNumber()
+        );
+
+        self::assertEquals(
+            $buyer->getCountryCode(),
+            $soapRequest->getRequestedShipment()->getShip()->getBuyer()->getAddress()->getCountryCode()
+        );
+
+        self::assertEquals(
+            $buyer->getPostalCode(),
+            $soapRequest->getRequestedShipment()->getShip()->getBuyer()->getAddress()->getPostalCode()
+        );
 
         if (count($recipient->getStreetLines()) > 1) {
             self::assertEquals(

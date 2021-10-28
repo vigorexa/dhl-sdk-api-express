@@ -2,6 +2,7 @@
 /**
  * See LICENSE.md for license details.
  */
+
 namespace Dhl\Express\Webservice\Soap\Type\ShipmentRequest;
 
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\Ship\BuyerContactInfo;
@@ -57,13 +58,17 @@ class Ship
     /**
      * Constructs the ship section.
      *
-     * @param ContactInfo $shipper   The shipper contact info
+     * @param ContactInfo $shipper The shipper contact info
      * @param ContactInfo $recipient The recipient contact info
+     * @param ?BuyerContactInfo $buyer The buyer contact info (optional)
      */
-    public function __construct(ContactInfo $shipper, ContactInfo $recipient)
+    public function __construct(ContactInfo $shipper, ContactInfo $recipient, ?BuyerContactInfo $buyer = null)
     {
         $this->setShipper($shipper)
-            ->setRecipient($recipient);
+             ->setRecipient($recipient);
+        if ($buyer) {
+            $this->setBuyer($buyer);
+        }
     }
 
     /**

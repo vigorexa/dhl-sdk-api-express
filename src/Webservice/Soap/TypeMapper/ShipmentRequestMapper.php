@@ -70,36 +70,51 @@ class ShipmentRequestMapper
             $shipmentInfo->setPaperlessTradeImage($request->getShipmentDetails()->getPaperlessEncodedStringDocument());
         }
 
-        // Create ship
-        $ship = new Ship(
-            new Ship\ContactInfo(
+        $buyerContactInfo = null;
+        if ($request->getBuyer()) {
+            $buyerContactInfo = new Ship\BuyerContactInfo(
                 new Ship\Contact(
-                    $request->getShipper()->getName(),
-                    $request->getShipper()->getCompany(),
-                    $request->getShipper()->getPhone()
+                    $request->getBuyer()->getName(),
+                    $request->getBuyer()->getCompany(),
+                    $request->getBuyer()->getPhone()
                 ),
-                new Address(
-                    $request->getShipper()->getStreetLines()[0],
-                    $request->getShipper()->getCity(),
-                    $request->getShipper()->getPostalCode(),
-                    $request->getShipper()->getCountryCode()
-                ),
-                $request->getShipper()->getRegistrationNumbers()
+                new Ship\BuyerAddress(
+                    $request->getBuyer()->getStreetLines()[0],
+                    $request->getBuyer()->getCity(),
+                    $request->getBuyer()->getPostalCode(),
+                    $request->getBuyer()->getCountryCode()
+                )
+            );
+        }
+
+        $recipientContactInfo = new Ship\ContactInfo(
+            new Ship\Contact(
+                $request->getRecipient()->getName(),
+                $request->getRecipient()->getCompany(),
+                $request->getRecipient()->getPhone()
             ),
-            new Ship\ContactInfo(
-                new Ship\Contact(
-                    $request->getRecipient()->getName(),
-                    $request->getRecipient()->getCompany(),
-                    $request->getRecipient()->getPhone()
-                ),
-                new Address(
-                    $request->getRecipient()->getStreetLines()[0],
-                    $request->getRecipient()->getCity(),
-                    $request->getRecipient()->getPostalCode(),
-                    $request->getRecipient()->getCountryCode()
-                ),
-                $request->getRecipient()->getRegistrationNumbers()
-            )
+            new Address(
+                $request->getRecipient()->getStreetLines()[0],
+                $request->getRecipient()->getCity(),
+                $request->getRecipient()->getPostalCode(),
+                $request->getRecipient()->getCountryCode()
+            ),
+            $request->getRecipient()->getRegistrationNumbers()
+        );
+
+        $shipperContactInfo = new Ship\ContactInfo(
+            new Ship\Contact(
+                $request->getShipper()->getName(),
+                $request->getShipper()->getCompany(),
+                $request->getShipper()->getPhone()
+            ),
+            new Address(
+                $request->getShipper()->getStreetLines()[0],
+                $request->getShipper()->getCity(),
+                $request->getShipper()->getPostalCode(),
+                $request->getShipper()->getCountryCode()
+            ),
+            $request->getShipper()->getRegistrationNumbers()
         );
 
         $commodities = new InternationalDetail\Commodities(
@@ -118,7 +133,11 @@ class ShipmentRequestMapper
                 $commodities,
                 $request->getExportDeclaration()
             ),
-            $ship,
+            new Ship(
+                $shipperContactInfo,
+                $recipientContactInfo,
+                $buyerContactInfo
+            ),
             new Packages(
                 $this->mapPackages($request->getPackages())
             )

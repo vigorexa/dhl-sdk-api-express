@@ -8,12 +8,14 @@ namespace Dhl\Express\Model;
 use Dhl\Express\Api\Data\Request\InsuranceInterface;
 use Dhl\Express\Api\Data\Request\PackageInterface;
 use Dhl\Express\Api\Data\Request\RecipientInterface;
+use Dhl\Express\Api\Data\Request\Shipment\BuyerInterface;
 use Dhl\Express\Api\Data\Request\Shipment\DangerousGoods\DryIceInterface;
 use Dhl\Express\Api\Data\Request\Shipment\LabelOptionsInterface;
 use Dhl\Express\Api\Data\Request\Shipment\ShipmentDetailsInterface;
 use Dhl\Express\Api\Data\Request\Shipment\ShipperInterface;
 use Dhl\Express\Api\Data\ShipmentRequestInterface;
 use Dhl\Express\Model\Request\Recipient;
+use Dhl\Express\Model\Request\Shipment\Buyer;
 use Dhl\Express\Model\Request\Shipment\Shipper;
 use Dhl\Express\Webservice\Soap\Type\Common\SpecialServices;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportDeclaration;
@@ -45,6 +47,11 @@ class ShipmentRequest implements ShipmentRequestInterface
      * @var Recipient
      */
     private $recipient;
+
+    /**
+     * @var Buyer
+     */
+    private $buyer;
 
     /**
      * @var PackageInterface[]
@@ -95,13 +102,15 @@ class ShipmentRequest implements ShipmentRequestInterface
         string $payerAccountNumber,
         ShipperInterface $shipper,
         RecipientInterface $recipient,
-        array $packages
+        array $packages,
+        Buyer $buyer = null
     )
     {
         $this->shipmentDetails = $shipmentDetails;
         $this->payerAccountNumber = $payerAccountNumber;
         $this->shipper = $shipper;
         $this->recipient = $recipient;
+        $this->buyer = $buyer;
         $this->packages = $packages;
     }
 
@@ -123,6 +132,11 @@ class ShipmentRequest implements ShipmentRequestInterface
     public function getRecipient(): RecipientInterface
     {
         return $this->recipient;
+    }
+
+    public function getBuyer(): ?BuyerInterface
+    {
+        return $this->buyer;
     }
 
     public function getPackages(): array
