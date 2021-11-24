@@ -245,6 +245,10 @@ class ShipmentRequestMapper
                 $labelOptions->setCustomerLogo(new LabelOptions\CustomerLogo($labelOptionsData->getCustomerLogo(), $labelOptionsData->getCustomerLogoFormat()));
             }
 
+            if ($labelOptionsData->getLabelType()) {
+                $shipmentInfo->setLabelType($labelOptionsData->getLabelType());
+            }
+
             $requestedShipment->getShipmentInfo()->setLabelOptions($labelOptions);
         }
 

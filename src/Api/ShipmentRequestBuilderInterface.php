@@ -292,4 +292,6 @@ interface ShipmentRequestBuilderInterface
 
     public function setCustomerLogo(string $image, string $format): ShipmentRequestBuilderInterface;
 
+    public function setLabelType(string $labelType): ShipmentRequestBuilderInterface;
+
 }

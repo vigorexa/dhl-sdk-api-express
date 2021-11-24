@@ -587,6 +587,10 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
                 $labelOptions->setCustomerLogo($this->data['labelOptions']['customerLogo'], $this->data['labelOptions']['customerLogoFormat']);
             }
 
+            if (isset($this->data['labelOptions']['labelType'])) {
+                $labelOptions->setLabelType($this->data['labelOptions']['labelType']);
+            }
+
             $request->setLabelOptions($labelOptions);
         }
 
@@ -606,6 +610,12 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
     {
         $this->data['labelOptions']['customerLogo'] = $image;
         $this->data['labelOptions']['customerLogoFormat'] = $format;
+        return $this;
+    }
+
+    public function setLabelType(string $labelType): ShipmentRequestBuilderInterface
+    {
+        $this->data['labelOptions']['labelType'] = $labelType;
         return $this;
     }
 }

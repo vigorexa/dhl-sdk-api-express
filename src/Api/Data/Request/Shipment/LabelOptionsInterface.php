@@ -47,4 +47,8 @@ interface LabelOptionsInterface
     public function getCustomerLogo();
 
     public function getCustomerLogoFormat();
+
+    public function getLabelType();
+
+    public function setLabelType(string $labelType);
 }

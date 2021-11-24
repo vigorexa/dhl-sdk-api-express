@@ -8,6 +8,7 @@ namespace Dhl\Express\Model\Request\Shipment;
 use Dhl\Express\Api\Data\Request\Shipment\LabelOptionsInterface;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions\DHLCustomsInvoiceLanguageCode;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions\DhlCustomsInvoiceType;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\ShipmentInfo\LabelType;
 
 class LabelOptions implements LabelOptionsInterface
 {
@@ -55,6 +56,11 @@ class LabelOptions implements LabelOptionsInterface
      * @var string
      */
     private $customerLogoFormat;
+
+    /**
+     * @var string
+     */
+    private $labelType = LabelType::PDF;
 
     public function __construct(
         bool   $waybillDocumentRequested = true,
@@ -161,5 +167,16 @@ class LabelOptions implements LabelOptionsInterface
     public function getCustomerLogoFormat()
     {
         return $this->customerLogoFormat;
+    }
+
+    public function getLabelType()
+    {
+        return $this->labelType;
+    }
+
+    public function setLabelType(string $labelType)
+    {
+        $this->labelType = $labelType;
+        return $this;
     }
 }
