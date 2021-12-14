@@ -476,16 +476,19 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
             $this->data['recipient']['email']
         );
 
-        $buyer = new Buyer(
-            $this->data['shipper']['countryCode'],
-            $this->data['shipper']['postalCode'],
-            $this->data['shipper']['city'],
-            $this->data['shipper']['streetLines'],
-            $this->data['shipper']['name'],
-            $this->data['shipper']['company'],
-            $this->data['shipper']['phone'],
-            $this->data['shipper']['email']
-        );
+        $buyer = null;
+        if (isset($this->data['buyer']) && !empty($this->data['buyer'])) {
+            $buyer = new Buyer(
+                $this->data['buyer']['countryCode'],
+                $this->data['buyer']['postalCode'],
+                $this->data['buyer']['city'],
+                $this->data['buyer']['streetLines'],
+                $this->data['buyer']['name'],
+                $this->data['buyer']['company'],
+                $this->data['buyer']['phone'],
+                $this->data['buyer']['email']
+            );
+        }
 
         if (isset($this->data['recipient']['registrationNumbers']) && !empty($this->data['recipient']['registrationNumbers'])) {
             foreach ($this->data['recipient']['registrationNumbers'] as $registrationNumberData) {
