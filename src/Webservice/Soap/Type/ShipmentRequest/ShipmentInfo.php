@@ -9,6 +9,7 @@ use Dhl\Express\Webservice\Soap\Type\Common\CurrencyCode;
 use Dhl\Express\Webservice\Soap\Type\Common\DropOffType;
 use Dhl\Express\Webservice\Soap\Type\Common\SpecialServices;
 use Dhl\Express\Webservice\Soap\Type\Common\UnitOfMeasurement;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\DocumentImages\DocumentImage;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\ShipmentInfo\Account;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\ShipmentInfo\LabelTemplate;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\ShipmentInfo\LabelType;
@@ -178,6 +179,11 @@ class ShipmentInfo
      * @var null|SpecialPickupInstruction
      */
     private $SpecialPickupInstructions;
+
+    /**
+     * @var null|DocumentImages
+     */
+    private $DocumentImages;
 
     /**
      * Constructor.
@@ -599,6 +605,21 @@ class ShipmentInfo
         $this->SpecialPickupInstructions = new SpecialPickupInstruction($specialPickupInstructions);
 
         return $this;
+    }
+
+    public function setDocumentImages(DocumentImage $documentImage)
+    {
+        $this->DocumentImages = (new DocumentImages())->setDocumentImage($documentImage);
+
+        return $this;
+    }
+
+    /**
+     * @return DocumentImages|null
+     */
+    public function getDocumentImages()
+    {
+        return $this->DocumentImages;
     }
 
     /**

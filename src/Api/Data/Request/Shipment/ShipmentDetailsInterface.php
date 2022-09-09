@@ -97,4 +97,25 @@ interface ShipmentDetailsInterface
      * @return string
      */
     public function getPaperlessEncodedStringDocument();
+
+    /**
+     * Transport Document
+     *
+     * @return string
+     */
+    public function getTransportDocumentImageEncodedString();
+
+    /**
+     * Transport Document Type
+     *
+     * @return ?string
+     */
+    public function getTransportDocumentImageType();
+
+    /**
+     * Transport Document Image Format
+     *
+     * @return ?string
+     */
+    public function getTransportDocumentImageFormat();
 }

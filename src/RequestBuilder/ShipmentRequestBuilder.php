@@ -420,9 +420,15 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         return $this;
     }
 
-    public function setPaperlessDocumentString($documentString)
+    public function setPaperlessDocumentString($documentString, $documentFormat = null, $documentType = null)
     {
         $this->data['paperlessDocument'] = $documentString;
+        if ($documentFormat) {
+            $this->data['paperlessDocumentImageFormat'] = $documentFormat;
+        }
+        if ($documentType) {
+            $this->data['paperlessDocumentImageType'] = $documentType;
+        }
 
         return $this;
     }
@@ -441,6 +447,14 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
             $this->data['customsValue'],
             $this->data['serviceType']
         );
+
+        if (isset($this->data['paperlessDocument'])) {
+            $shipmentDetails->setPaperlessEncodedStringDocument(
+                $this->data['paperlessDocument'],
+                $this->data['paperlessDocumentImageFormat'] ?? null,
+                $this->data['paperlessDocumentImageType'] ?? null
+            );
+        }
 
         // Build shipper
         $shipper = new Shipper(

@@ -138,6 +138,16 @@ class ShipmentDetails implements ShipmentDetailsInterface
     private $paperlessDocument;
 
     /**
+     * @var string
+     */
+    private $paperlessDocumentImageFormat;
+
+    /**
+     * @var string
+     */
+    private $paperlessDocumentImageType;
+
+    /**
      * ShipmentDetails constructor.
      *
      * @param bool $unscheduledPickup
@@ -232,8 +242,32 @@ class ShipmentDetails implements ShipmentDetailsInterface
         return (string) $this->paperlessDocument;
     }
 
-    public function getExportDeclaration()
+    public function getTransportDocumentImageEncodedString()
     {
-        return $this->exportDeclaration;
+        return (string) $this->paperlessDocument;
+    }
+
+    public function getTransportDocumentImageType()
+    {
+        return $this->paperlessDocumentImageType;
+    }
+
+    public function getTransportDocumentImageFormat()
+    {
+        return $this->paperlessDocumentImageFormat;
+    }
+
+    /**
+     * @param string $paperlessDocument
+     * @param string|null $imageFormat
+     * @param string|null $imageType
+     * @return ShipmentDetails
+     */
+    public function setPaperlessEncodedStringDocument(string $paperlessDocument, ?string $imageFormat = null, ?string $imageType = null): ShipmentDetails
+    {
+        $this->paperlessDocument = $paperlessDocument;
+        $this->paperlessDocumentImageFormat = $imageFormat;
+        $this->paperlessDocumentImageType = $imageType;
+        return $this;
     }
 }

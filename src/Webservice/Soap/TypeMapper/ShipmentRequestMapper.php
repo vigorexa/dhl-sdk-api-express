@@ -17,6 +17,7 @@ use Dhl\Express\Webservice\Soap\Type\Common\SpecialServices\Service;
 use Dhl\Express\Webservice\Soap\Type\Common\UnitOfMeasurement;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\DangerousGoods;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\DangerousGoods\Content;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\DocumentImages\DocumentImage;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\LabelOptions;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\Packages;
@@ -68,6 +69,16 @@ class ShipmentRequestMapper
         if (!empty($request->getShipmentDetails()->getPaperlessEncodedStringDocument())) {
             $shipmentInfo->setPaperlessTradeEnabled(true);
             $shipmentInfo->setPaperlessTradeImage($request->getShipmentDetails()->getPaperlessEncodedStringDocument());
+        }
+
+        if (!empty($request->getShipmentDetails()->getTransportDocumentImageEncodedString())) {
+            $shipmentInfo->setDocumentImages(
+                new DocumentImage(
+                    $request->getShipmentDetails()->getTransportDocumentImageEncodedString(),
+                    $request->getShipmentDetails()->getTransportDocumentImageFormat(),
+                    $request->getShipmentDetails()->getTransportDocumentImageType()
+                )
+            );
         }
 
         $buyerContactInfo = null;
