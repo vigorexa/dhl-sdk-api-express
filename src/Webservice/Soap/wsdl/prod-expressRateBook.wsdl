@@ -633,11 +633,11 @@
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:complexType name="ExportLineItems">
-	<xsd:sequence maxOccurs="999">
+	<xsd:sequence>
 		<xsd:annotation>
 			<xsd:documentation>Export line items details</xsd:documentation>
 		</xsd:annotation>
-		<xsd:element name="ExportLineItem" type="tns:ExportLineItemType"/>
+		<xsd:element maxOccurs="999" name="ExportLineItem" type="tns:ExportLineItemType"/>
 	</xsd:sequence>
 	</xsd:complexType>
 	<xsd:complexType name="ExportLineItemType">
